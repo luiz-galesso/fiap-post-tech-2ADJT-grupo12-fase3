@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/restaurante-db}
+    username: ${SPRING_DATASOURCE_USERNAME:restaurante}
+    password: ${SPRING_DATASOURCE_PASSWORD:senha}
+  jpa:
+    show-sql: true
+    jpa.hibernate.ddl-auto: create
+server:
+  port: 8080
+  servlet.context-path: /api-restaurante
