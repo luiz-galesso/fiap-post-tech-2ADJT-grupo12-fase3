@@ -22,6 +22,7 @@ public class Avaliacao {
     @SequenceGenerator(name = "avaliacao_generator", sequenceName = "avaliacao_sequence", allocationSize = 1)
     private Long id;
 
+    @ManyToOne
     private Reserva reserva;
 
     private Integer valor;

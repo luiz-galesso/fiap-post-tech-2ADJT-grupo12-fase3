@@ -23,6 +23,7 @@ public class Comentario {
     @SequenceGenerator(name = "comentario_generator", sequenceName = "comentario_sequence", allocationSize = 1)
     private Long id;
 
+    @ManyToOne
     private Reserva reserva;
 
     private String texto;

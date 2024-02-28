@@ -24,7 +24,7 @@ public class Comentar {
 
         Comentario comentario =
                 new Comentario(reserva,
-                        comentarioInsertDTO.getComentario(),
+                        comentarioInsertDTO.getTexto(),
                         LocalDateTime.now()
                 );
 

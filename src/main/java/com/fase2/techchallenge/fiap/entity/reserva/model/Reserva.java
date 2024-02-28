@@ -27,6 +27,7 @@ public class Reserva {
     @ManyToOne
     private Mesa mesa;
 
+    @ManyToOne
     private Cliente cliente;
 
     private String situacao;
