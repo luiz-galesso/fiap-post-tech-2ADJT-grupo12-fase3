@@ -5,11 +5,11 @@ import com.fase2.techchallenge.fiap.entity.comentario.model.Comentario;
 import com.fase2.techchallenge.fiap.entity.reserva.gateway.ReservaGateway;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.infrastructure.comentario.controller.dto.ComentarioInsertDTO;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-@Component
+@Service
 public class Comentar {
     private final ComentarioGateway comentarioGateway;
     private final ReservaGateway reservaGateway;

@@ -5,10 +5,10 @@ import com.fase2.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
 import com.fase2.techchallenge.fiap.entity.reserva.gateway.ReservaGateway;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.infrastructure.avaliacao.controller.dto.AvaliacaoInsertDTO;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-@Component
+@Service
 public class Avaliar{
 
         private final AvaliacaoGateway avaliacaoGateway;

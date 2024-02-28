@@ -1,9 +1,15 @@
 package com.fase2.techchallenge.fiap.infrastructure.comentario.controller;
 
-import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
+import com.fase2.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
+import com.fase2.techchallenge.fiap.entity.comentario.model.Comentario;
+import com.fase2.techchallenge.fiap.infrastructure.avaliacao.controller.dto.AvaliacaoInsertDTO;
 import com.fase2.techchallenge.fiap.infrastructure.comentario.controller.dto.ComentarioInsertDTO;
-import com.fase2.techchallenge.fiap.usecase.reserva.ObterReservaPeloId;
-import com.fase2.techchallenge.fiap.usecase.reserva.Reservar;
+import com.fase2.techchallenge.fiap.usecase.avaliacao.ApagarAvaliacao;
+import com.fase2.techchallenge.fiap.usecase.avaliacao.Avaliar;
+import com.fase2.techchallenge.fiap.usecase.avaliacao.EditarAvaliacao;
+import com.fase2.techchallenge.fiap.usecase.comentario.ApagarComentario;
+import com.fase2.techchallenge.fiap.usecase.comentario.Comentar;
+import com.fase2.techchallenge.fiap.usecase.comentario.EditarComentario;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -15,29 +21,41 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/comentarios")
 @Tag(name = "Comentarios", description="Serviços para manipular comentários das reservas realizadas")
 public class ComentarioController {
-    /*private final Reservar reservar;
 
-    private final ObterReservaPeloId obterReservaPeloId;
+    private final Comentar comentar;
 
-    public ComentarioController(Reservar reservar, ObterReservaPeloId obterReservaPeloId) {
-        this.reservar = reservar;
-        this.obterReservaPeloId = obterReservaPeloId;
+    private final EditarComentario editarComentario;
+
+    private final ApagarComentario apagarComentario;
+
+    public ComentarioController(Comentar comentar, EditarComentario editarComentario, ApagarComentario apagarComentario) {
+        this.comentar = comentar;
+        this.editarComentario = editarComentario;
+        this.apagarComentario = apagarComentario;
     }
 
-    @Operation( summary= "Realiza uma nova reserva", description= "Serviço utilizado para realizar uma novo reversa.")
+    @Operation( summary= "Realiza um comentário de uma reserva", description= "Serviço utilizado para realizar um comentário de uma reversa.")
     @PostMapping(produces = "application/json")
     @Transactional
-    public ResponseEntity<?> create(@RequestBody ComentarioInsertDTO reservaInsertDTO) {
-        Reserva reserva = reservar.execute(reservaInsertDTO);
-        return new ResponseEntity<>(reserva, HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody ComentarioInsertDTO comentarioInsertDTO) {
+        Comentario comentario = comentar.execute(comentarioInsertDTO);
+        return new ResponseEntity<>(comentario, HttpStatus.CREATED);
     }
 
-    @Operation( summary= "Busca uma reserva pelo Id", description= "Serviço utilizado para buscar uma reserva pelo Id.")
-    @GetMapping(value="/{id}", produces = "application/json")
+    @Operation( summary= "Edita o comentário de uma reserva", description= "Serviço utilizado para editar o comentário de uma reserva.")
+    @PutMapping(value="/{id}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> findById(@PathVariable Long id) {
-        Reserva reserva  = obterReservaPeloId.execute(id);
-        return new ResponseEntity<>(reserva, HttpStatus.OK);
-    }*/
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody String texto) {
+        Comentario comentario  = editarComentario.execute(id, texto);
+        return new ResponseEntity<>(comentario, HttpStatus.OK);
+    }
+
+    @Operation( summary= "Apaga o comentário de uma reserva", description= "Serviço utilizado para apagar o comentário de uma reserva.")
+    @DeleteMapping(value="/{id}", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        apagarComentario.execute(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

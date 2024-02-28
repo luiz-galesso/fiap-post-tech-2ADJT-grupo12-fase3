@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="tb_cliente")
@@ -21,7 +22,7 @@ public class Cliente {
     private String email;
     private String nome;
     private String situacao;
-    private LocalDate dataRegistro;
+    private LocalDateTime dataRegistro;
     private LocalDate dataNascimento;
     private Endereco endereco;
 }

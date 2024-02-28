@@ -1,10 +1,10 @@
 package com.fase2.techchallenge.fiap.usecase.comentario;
 
-import com.fase2.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
 import com.fase2.techchallenge.fiap.entity.comentario.gateway.ComentarioGateway;
 import com.fase2.techchallenge.fiap.entity.comentario.model.Comentario;
+import org.springframework.stereotype.Service;
 
-public class EditarComentario {
+@Service public class EditarComentario {
 
     private final ComentarioGateway comentarioGateway;
 

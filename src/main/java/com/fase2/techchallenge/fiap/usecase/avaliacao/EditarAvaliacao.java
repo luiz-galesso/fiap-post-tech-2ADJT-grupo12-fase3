@@ -2,9 +2,9 @@ package com.fase2.techchallenge.fiap.usecase.avaliacao;
 
 import com.fase2.techchallenge.fiap.entity.avaliacao.gateway.AvaliacaoGateway;
 import com.fase2.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class EditarAvaliacao {
     private final AvaliacaoGateway avaliacaoGateway;
 

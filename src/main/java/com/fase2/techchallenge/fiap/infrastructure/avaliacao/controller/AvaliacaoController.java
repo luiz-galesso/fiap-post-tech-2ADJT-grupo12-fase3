@@ -1,9 +1,11 @@
 package com.fase2.techchallenge.fiap.infrastructure.avaliacao.controller;
 
-import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
+import com.fase2.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
 import com.fase2.techchallenge.fiap.infrastructure.avaliacao.controller.dto.AvaliacaoInsertDTO;
+import com.fase2.techchallenge.fiap.usecase.avaliacao.ApagarAvaliacao;
+import com.fase2.techchallenge.fiap.usecase.avaliacao.EditarAvaliacao;
 import com.fase2.techchallenge.fiap.usecase.reserva.ObterReservaPeloId;
-import com.fase2.techchallenge.fiap.usecase.reserva.Reservar;
+import com.fase2.techchallenge.fiap.usecase.avaliacao.Avaliar;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -15,29 +17,41 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/avaliacoes")
 @Tag(name = "Avaliações", description="Serviços para manipular as avaliações de uma reserva.")
 public class AvaliacaoController {
-    /*private final Reservar reservar;
 
-    private final ObterReservaPeloId obterReservaPeloId;
+    private final Avaliar avaliar;
 
-    public AvaliacaoController(Reservar reservar, ObterReservaPeloId obterReservaPeloId) {
-        this.reservar = reservar;
-        this.obterReservaPeloId = obterReservaPeloId;
+    private final EditarAvaliacao editarAvaliacao;
+
+    private final ApagarAvaliacao apagarAvaliacao;
+
+    public AvaliacaoController(Avaliar avaliar, EditarAvaliacao editarAvaliacao, ApagarAvaliacao apagarAvaliacao) {
+        this.avaliar = avaliar;
+        this.editarAvaliacao = editarAvaliacao;
+        this.apagarAvaliacao = apagarAvaliacao;
     }
 
-    @Operation( summary= "Realiza uma nova reserva", description= "Serviço utilizado para realizar uma novo reversa.")
+    @Operation( summary= "Realiza uma nova avaliação de uma reserva", description= "Serviço utilizado para realizar uma nova avaliação de uma reversa.")
     @PostMapping(produces = "application/json")
     @Transactional
-    public ResponseEntity<?> create(@RequestBody AvaliacaoInsertDTO reservaInsertDTO) {
-        Reserva reserva = reservar.execute(reservaInsertDTO);
-        return new ResponseEntity<>(reserva, HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody AvaliacaoInsertDTO avaliacaoInsertDTO) {
+        Avaliacao avaliacao = avaliar.execute(avaliacaoInsertDTO);
+        return new ResponseEntity<>(avaliacao, HttpStatus.CREATED);
     }
 
-    @Operation( summary= "Busca uma reserva pelo Id", description= "Serviço utilizado para buscar uma reserva pelo Id.")
-    @GetMapping(value="/{id}", produces = "application/json")
+    @Operation( summary= "Edita a avaliação de uma reserva", description= "Serviço utilizado para editar a avaliação de uma reserva.")
+    @PutMapping(value="/{id}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> findById(@PathVariable Long id) {
-        Reserva reserva  = obterReservaPeloId.execute(id);
-        return new ResponseEntity<>(reserva, HttpStatus.OK);
-    }*/
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Integer valor) {
+        Avaliacao avaliacao  = editarAvaliacao.execute(id, valor);
+        return new ResponseEntity<>(avaliacao, HttpStatus.OK);
+    }
+
+    @Operation( summary= "Apaga a avaliação de uma reserva", description= "Serviço utilizado para apagar a avaliação de uma reserva.")
+    @DeleteMapping(value="/{id}", produces = "application/json")
+    @Transactional
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        apagarAvaliacao.execute(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

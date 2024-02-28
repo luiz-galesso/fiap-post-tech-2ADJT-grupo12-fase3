@@ -1,7 +1,6 @@
 package com.fase2.techchallenge.fiap.entity.comentario.model;
 
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
-import com.fase2.techchallenge.fiap.entity.endereco.model.Endereco;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
