@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.entity.reserva.model;
 
+import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.entity.mesa.model.Mesa;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,8 @@ public class Reserva {
 
     @ManyToOne
     private Mesa mesa;
+
+    private Cliente cliente;
 
     private String situacao;
 
