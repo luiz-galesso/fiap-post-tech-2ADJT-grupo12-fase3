@@ -4,12 +4,13 @@ import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.repository.RestauranteRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
 public class RestauranteGateway {
 
-    private RestauranteRepository restauranteRepository;
+    private final RestauranteRepository restauranteRepository;
 
     public RestauranteGateway(RestauranteRepository restauranteRepository) {
         this.restauranteRepository = restauranteRepository;
@@ -25,5 +26,7 @@ public class RestauranteGateway {
     public Optional<Restaurante> findById(Long id){
         return this.restauranteRepository.findById(id);
     }
+
+    public List<Restaurante> findByNomeContaining(String nome) { return this.restauranteRepository.findByNomeContainingIgnoreCase(nome); }
 
 }
