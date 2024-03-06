@@ -27,6 +27,14 @@ public class RestauranteGateway {
         return this.restauranteRepository.findById(id);
     }
 
-    public List<Restaurante> findByNomeContaining(String nome) { return this.restauranteRepository.findByNomeContainingIgnoreCase(nome); }
+    public List<Restaurante> findByNomeContaining(String nome)
+    {
+        return this.restauranteRepository.findByNomeContainingIgnoreCase(nome);
+    }
+
+    public List<Restaurante> findByTipoCulinariaContaining(String tipCulinaria)
+    {
+        return this.restauranteRepository.findByTipoCulinariaContainingIgnoreCase(tipCulinaria);
+    }
 
 }

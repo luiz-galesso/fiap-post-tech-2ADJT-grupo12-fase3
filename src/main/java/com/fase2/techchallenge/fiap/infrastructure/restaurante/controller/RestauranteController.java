@@ -3,6 +3,7 @@ package com.fase2.techchallenge.fiap.infrastructure.restaurante.controller;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteInsertDTO;
 import com.fase2.techchallenge.fiap.usecase.restaurante.BuscarRestaurantePeloNome;
+import com.fase2.techchallenge.fiap.usecase.restaurante.BuscarRestaurantePeloTipo;
 import com.fase2.techchallenge.fiap.usecase.restaurante.CriarRestaurante;
 import com.fase2.techchallenge.fiap.usecase.restaurante.ObterRestaurantePeloId;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,13 +26,17 @@ public class RestauranteController {
 
     private final BuscarRestaurantePeloNome buscarRestaurantePeloNome;
 
+    private  final BuscarRestaurantePeloTipo buscarRestaurantePeloTipo;
+
     public RestauranteController(
             CriarRestaurante criarRestaurante,
             ObterRestaurantePeloId obterRestaurantePeloId,
-            BuscarRestaurantePeloNome buscarRestaurantePeloNome) {
+            BuscarRestaurantePeloNome buscarRestaurantePeloNome,
+            BuscarRestaurantePeloTipo buscarRestaurantePeloTipo) {
         this.criarRestaurante = criarRestaurante;
         this.obterRestaurantePeloId = obterRestaurantePeloId;
         this.buscarRestaurantePeloNome = buscarRestaurantePeloNome;
+        this.buscarRestaurantePeloTipo = buscarRestaurantePeloTipo;
     }
 
     @Operation( summary= "Cadastra um novo restaurante", description= "Serviço utilizado para cadastrar um novo restaurante.")
@@ -61,6 +66,21 @@ public class RestauranteController {
 
         if(restaurantes.isEmpty())
             return new ResponseEntity<>("Nenhum resultado foi encontrado para a busca: " + nome, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(restaurantes, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Busca restaurante por tipo da culinaria", description = "Serviço utilizado para buscar um restaurante pelo tipo da culinaria.")
+    @GetMapping("/busca-tipo-culinaria")
+    public ResponseEntity<?> findByTipoCulinariaContaining(@RequestParam String tipo)
+    {
+
+        if(tipo.length() < 3) return new ResponseEntity<>("Digite pelo menos 3 letras.", HttpStatus.BAD_REQUEST);
+
+        List<Restaurante> restaurantes = this.buscarRestaurantePeloTipo.execute(tipo);
+
+        if(restaurantes.isEmpty())
+            return new ResponseEntity<>("Nenhum resultado foi encontrado para a busca: " + tipo, HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(restaurantes, HttpStatus.OK);
     }
