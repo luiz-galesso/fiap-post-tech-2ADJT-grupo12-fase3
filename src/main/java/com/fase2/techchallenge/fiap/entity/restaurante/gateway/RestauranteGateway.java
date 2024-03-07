@@ -1,7 +1,10 @@
 package com.fase2.techchallenge.fiap.entity.restaurante.gateway;
 
+import com.fase2.techchallenge.fiap.entity.endereco.model.Endereco;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.repository.RestauranteRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,14 +30,18 @@ public class RestauranteGateway {
         return this.restauranteRepository.findById(id);
     }
 
-    public List<Restaurante> findByNomeContaining(String nome)
-    {
+    public List<Restaurante> findByNomeContaining(String nome){
         return this.restauranteRepository.findByNomeContainingIgnoreCase(nome);
     }
 
-    public List<Restaurante> findByTipoCulinariaContaining(String tipCulinaria)
-    {
+    public List<Restaurante> findByTipoCulinariaContaining(String tipCulinaria){
         return this.restauranteRepository.findByTipoCulinariaContainingIgnoreCase(tipCulinaria);
+    }
+
+    public List<Restaurante> findByEndereco(Endereco endereco)
+    {
+        Restaurante restaurante = new Restaurante(endereco);
+        return this.restauranteRepository.findAll(Example.of(restaurante));
     }
 
 }

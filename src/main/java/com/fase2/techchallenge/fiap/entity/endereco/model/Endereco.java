@@ -20,4 +20,22 @@ public class Endereco {
     private String estado;
 
     private String referencia;
+
+    public Endereco () {}
+    public Endereco(String logradouro, String numero, Long cep, String cidade, String estado) {
+        if(logradouro != null)
+            this.logradouro = logradouro;
+
+        if(numero != null)
+            this.numero = numero;
+
+        if(cep != null)
+            this.cep = cep;
+
+        if(cidade != null)
+            this.cidade = cidade;
+
+        if(estado != null)
+        this.estado = estado;
+    }
 }
