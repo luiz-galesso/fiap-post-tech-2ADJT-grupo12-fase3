@@ -16,12 +16,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>
     List<Restaurante> findByNomeContainingIgnoreCase(String nome);
 
     List<Restaurante> findByTipoCulinariaContainingIgnoreCase(String tipoCulinaria);
-//    List<Restaurante> findByEndereco_LogradouroOrEndereco_NumeroOrEndereco_CepOrEndereco_CidadeOrEndereco_Estado(
-//      String logradouro, String numero, Long cep, String cidade, String estado
-//    );
-
-//    @Query("SELECT r FROM Restaurante r WHERE (r.endereco.logradouro, r.endereco.cidade, r.endereco.cep, r.endereco.numero) = (:logradouro, :cidade, :cep, :numero)")
-
     @Query("SELECT r FROM Restaurante r WHERE r.endereco.logradouro = :logradouro AND r.endereco.cidade = :cidade AND r.endereco.cep = :cep AND r.endereco.numero = :numero")
     List<Restaurante> findByEndereco(@Param("logradouro") String logradouro,
                                      @Param("cidade") String cidade,
