@@ -1,8 +1,8 @@
 package com.fase2.techchallenge.fiap.usecase.restaurante;
 
-import com.fase2.techchallenge.fiap.entity.restaurante.exception.RestauranteNotFoundException;
 import com.fase2.techchallenge.fiap.entity.restaurante.gateway.RestauranteGateway;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
+import com.fase2.techchallenge.fiap.usecase.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +14,7 @@ public class ObterRestaurantePeloId {
     }
 
     public Restaurante execute(Long id) {
-        return this.restauranteGateway.findById(id).orElseThrow();
+        return this.restauranteGateway.findById(id).orElseThrow(() -> new EntityNotFoundException("Restaurante não localizado"));
     }
 
 
