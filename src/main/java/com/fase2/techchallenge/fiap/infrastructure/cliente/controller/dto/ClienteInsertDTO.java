@@ -1,28 +1,19 @@
-package com.fase2.techchallenge.fiap.entity.cliente.model;
+package com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto;
 
 import com.fase2.techchallenge.fiap.entity.endereco.model.Endereco;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name="tb_cliente")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class Cliente {
+public class ClienteInsertDTO {
 
-    @Id
     private String email;
     private String nome;
     private String situacao;
-    private LocalDateTime dataRegistro;
     private LocalDate dataNascimento;
     private Endereco endereco;
 }

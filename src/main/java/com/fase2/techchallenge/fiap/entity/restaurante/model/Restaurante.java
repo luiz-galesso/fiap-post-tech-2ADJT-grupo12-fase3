@@ -52,4 +52,7 @@ public class Restaurante {
         this.dataRegistro = dataRegistro;
     }
 
+    public Restaurante(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }
