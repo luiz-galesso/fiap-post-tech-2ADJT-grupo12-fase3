@@ -27,7 +27,7 @@ public abstract class RestauranteHelper {
 
     }
 
-    public static Restaurante registrarRestaurante(RestauranteRepository restauranteRepository){
-        return restauranteRepository.save(gerarRestaurante(null));
+    public static Restaurante registrarRestaurante(RestauranteRepository restauranteRepository, Restaurante restaurante){
+        return restauranteRepository.save(restaurante);
     }
 }

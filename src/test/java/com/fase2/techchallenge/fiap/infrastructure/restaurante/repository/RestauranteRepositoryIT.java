@@ -44,7 +44,8 @@ class RestauranteRepositoryIT {
     }
     @Test
     void devePermitirConsultarRestaurante(){
-        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository);
+        var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
+        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
 
         var id = restaurante.getId();
 
@@ -64,7 +65,8 @@ class RestauranteRepositoryIT {
 
     @Test
     void devePermitirApagarRestaurante() {
-        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository);
+        var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
+        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
         var id = restaurante.getId();
 
         restauranteRepository.deleteById(id);
@@ -77,15 +79,62 @@ class RestauranteRepositoryIT {
 
     @Test
     void devePermitirListarRestaurantes(){
-        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository);
-        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository);
-        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository);
+        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+        var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
+        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
+        var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
+        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
 
         var resultado = restauranteRepository.findAll();
 
         assertThat(resultado)
                 .hasSize(3);
     }
+
+    @Test
+    void devePermitirConsultarRestauranteQueNomeContenha(){
+        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+        restauranteGerado1.setNome("Avenida Grill");
+        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+
+        var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
+        restauranteGerado2.setNome("Prime grill");
+        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
+
+        var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
+        restauranteGerado3.setNome("Sushi House");
+        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
+
+        var parteDoNome = "grill";
+
+        var resultado = restauranteRepository.findByNomeContainingIgnoreCase(parteDoNome);
+
+        assertThat(resultado).hasSize(2);
+    }
+
+    @Test
+    void devePermitirConsultarRestaurantePorTipoCulinaria(){
+        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+        restauranteGerado1.setTipoCulinaria("BBQ");
+        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+
+        var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
+        restauranteGerado2.setTipoCulinaria("BBQ");
+        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
+
+        var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
+        restauranteGerado2.setTipoCulinaria("Oriental");
+        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
+
+        var tipoCulinariaEsperado = "Oriental";
+
+        var resultado = restauranteRepository.findByTipoCulinariaContainingIgnoreCase("oriental");
+
+        assertThat(resultado).hasSize(1);
+
+    }
+
 
 
 
