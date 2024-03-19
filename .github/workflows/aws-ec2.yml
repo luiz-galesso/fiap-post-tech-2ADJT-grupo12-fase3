@@ -2,7 +2,7 @@ name: Deploy AWS EC2
 
 on:
   push:
-    branches: [ "master", "feature"]
+    branches: [aws-ec2]
 
 jobs:
   build:
