@@ -6,6 +6,8 @@ import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -18,4 +20,20 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     Page<Reserva> findBySituacaoAndCliente(String situacao, Cliente cliente, Pageable pageable);
 
+    @Query("select r from Reserva r " +
+            " where r.mesa.id.idMesa = :idMesa " +
+            "   and r.situacao = :situacao " +
+            "   and ((( r.dataHoraInicio >= :dataHoraInicio " +
+            "       and r.dataHoraInicio < :dataHoraFinal) " +
+            "  or (r.dataHoraInicio <= :dataHoraInicio " +
+            "     and r.dataHoraInicio > :dataHoraFinal)) or " +
+            "   (( r.dataHoraFinal > :dataHoraInicio " +
+            "   and r.dataHoraFinal <= :dataHoraFinal) " +
+            "  or (r.dataHoraFinal < :dataHoraInicio " +
+            "  and r.dataHoraFinal >= :dataHoraFinal)))"
+    )
+    List<Reserva> reservaExists(@Param("idMesa") Long idMesa,
+                                @Param("situacao") String situacao,
+                                @Param("dataHoraInicio") LocalDateTime dataHoraInicio,
+                                @Param("dataHoraFinal") LocalDateTime dataHoraFinal);
 }

@@ -1,6 +1,7 @@
 package com.fase2.techchallenge.fiap.entity.reserva.gateway;
 
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
+import com.fase2.techchallenge.fiap.entity.mesa.model.Mesa;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
 import com.fase2.techchallenge.fiap.infrastructure.reserva.repository.ReservaRepository;
@@ -36,7 +37,11 @@ public class ReservaGateway {
         return this.reservaRepository.findByMesaIdRestauranteAndDataHoraInicioBetween(restaurante, dataInicio, dataFinal);
     }
 
-    public Page<Reserva> findBySituacaoAndCliente(String situacao, Cliente cliente, Pageable pageable){
+    public Page<Reserva> findBySituacaoAndCliente(String situacao, Cliente cliente, Pageable pageable) {
         return this.reservaRepository.findBySituacaoAndCliente(situacao, cliente, pageable);
+    }
+
+    public List<Reserva>  findByIdMesaAndSituacaoAndDataHoraInicioBetweenOrDataHoraFinalBetween(Long idMesa, String situacao, LocalDateTime dataHoraInicioNovaReserva, LocalDateTime dataHoraFinalNovaReserva)  {
+            return this.reservaRepository.reservaExists(idMesa, situacao, dataHoraInicioNovaReserva, dataHoraFinalNovaReserva);
     }
 }

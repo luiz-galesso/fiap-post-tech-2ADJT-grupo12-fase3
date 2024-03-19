@@ -17,6 +17,8 @@ public class Endereco {
 
   private String numero;
 
+  private String bairro;
+
   private String complemento;
 
   private Long cep;
@@ -27,12 +29,15 @@ public class Endereco {
 
   private String referencia;
 
-  public Endereco(String logradouro, String numero, Long cep, String cidade, String estado) {
+  public Endereco(String logradouro, String numero, String bairro, Long cep, String cidade, String estado) {
     if (logradouro != null)
       this.logradouro = logradouro;
 
     if (numero != null)
       this.numero = numero;
+
+    if (bairro != null)
+      this.logradouro = bairro;
 
     if (cep != null)
       this.cep = cep;

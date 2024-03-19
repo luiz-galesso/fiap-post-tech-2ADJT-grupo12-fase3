@@ -4,6 +4,7 @@ import com.fase2.techchallenge.fiap.entity.avaliacao.gateway.AvaliacaoGateway;
 import com.fase2.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
 import com.fase2.techchallenge.fiap.entity.reserva.gateway.ReservaGateway;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
+import com.fase2.techchallenge.fiap.infrastructure.reserva.controller.dto.ReservaCheckinoutDTO;
 import com.fase2.techchallenge.fiap.usecase.exception.BussinessErrorException;
 import com.fase2.techchallenge.fiap.usecase.exception.EntityNotFoundException;
 import lombok.AllArgsConstructor;
