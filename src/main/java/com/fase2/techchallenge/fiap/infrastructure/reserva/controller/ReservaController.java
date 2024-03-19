@@ -30,7 +30,7 @@ public class ReservaController {
 
     private final RealizarCheckin realizarCheckin;
 
-    private final RealizarCheckin realizarCheckout;
+    private final RealizarCheckout realizarCheckout;
 
     private final CancelarReserva cancelarReserva;
 
@@ -61,26 +61,26 @@ public class ReservaController {
     }
 
     @Operation( summary= "Realiza o checkin de uma reserva", description= "Serviço utilizado para realizar o checkin de uma reserva.")
-    @PutMapping(value="/{idReserva}/checkin", produces = "application/json")
+    @PutMapping(value="/{idReserva}/checkin/{idCliente}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> realizarCheckin(@PathVariable Long idReserva, @RequestBody ReservaCheckinoutDTO reservaCheckinoutDTO) {
-        Reserva reserva  = realizarCheckin.execute(idReserva, reservaCheckinoutDTO.getIdCliente());
+    public ResponseEntity<?> realizarCheckin(@PathVariable Long idReserva, @PathVariable String idCliente) {
+        Reserva reserva  = realizarCheckin.execute(idReserva, idCliente);
         return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 
     @Operation( summary= "Realiza o checkout de uma reserva", description= "Serviço utilizado para realizar o checkout de uma reserva.")
-    @PutMapping(value="/{idReserva}/checkout", produces = "application/json")
+    @PutMapping(value="/{idReserva}/checkout/{idCliente}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> realizarCheckout(@PathVariable Long idReserva, @RequestBody ReservaCheckinoutDTO reservaCheckinDTO) {
-        Reserva reserva  = realizarCheckout.execute(idReserva, reservaCheckinDTO.getIdCliente());
+    public ResponseEntity<?> realizarCheckout(@PathVariable Long idReserva, @PathVariable String idCliente) {
+        Reserva reserva  = realizarCheckout.execute(idReserva, idCliente);
         return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 
     @Operation( summary= "Cancela uma reserva", description= "Serviço utilizado para cancelar uma reserva.")
-    @PutMapping(value="/{idReserva}/cancelar", produces = "application/json")
+    @PutMapping(value="/{idReserva}/cancelar/{idCliente}", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> cancelarReserva(@PathVariable Long idReserva, @RequestBody ReservaCheckinoutDTO reservaCheckinoutDTO) {
-        Reserva reserva  = cancelarReserva.execute(idReserva, reservaCheckinoutDTO.getIdCliente());
+    public ResponseEntity<?> cancelarReserva(@PathVariable Long idReserva, @PathVariable  String idCliente) {
+        Reserva reserva  = cancelarReserva.execute(idReserva, idCliente);
         return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 

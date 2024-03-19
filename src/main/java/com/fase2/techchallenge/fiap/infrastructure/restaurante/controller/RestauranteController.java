@@ -91,11 +91,12 @@ public class RestauranteController {
     public ResponseEntity<?> findByEndereco(
             @RequestParam(required = false) String logradouro,
             @RequestParam(required = false) String numero,
+            @RequestParam(required = false) String bairro,
             @RequestParam(required = false) String cidade,
             @RequestParam(required = false) String estado,
             @RequestParam(required = false) Long cep) {
 
-        List<Restaurante> restaurantes = this.buscarRestaurantePelaLocalizacao.execute(new Endereco(logradouro, numero, cep, cidade, estado));
+        List<Restaurante> restaurantes = this.buscarRestaurantePelaLocalizacao.execute(new Endereco(logradouro, numero, bairro, cep, cidade, estado));
 
         if(restaurantes.isEmpty())
             return new ResponseEntity<>("Nenhum resultado foi encontrado para a busca", HttpStatus.NOT_FOUND);

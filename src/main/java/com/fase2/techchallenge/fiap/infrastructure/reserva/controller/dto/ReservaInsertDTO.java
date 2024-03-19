@@ -17,5 +17,5 @@ public class ReservaInsertDTO {
 
     private LocalDateTime dataHoraInicio;
 
-    private LocalDateTime dataHoraFinal;
+    private Integer quantidadeHoras;
 }

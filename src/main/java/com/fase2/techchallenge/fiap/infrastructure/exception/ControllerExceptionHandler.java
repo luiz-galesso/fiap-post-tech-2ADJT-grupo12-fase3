@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.infrastructure.exception;
 
+import com.fase2.techchallenge.fiap.usecase.exception.BussinessErrorException;
 import com.fase2.techchallenge.fiap.usecase.exception.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.coyote.BadRequestException;
@@ -38,6 +39,15 @@ public class ControllerExceptionHandler {
         errorReponse.setTimestamp(Instant.now());
         errorReponse.setStatus("KO");
         errorReponse.setMessage("Ocorreu um erro genérico na aplicação.");
+        return ResponseEntity.status(status).body(this.errorReponse);
+    }
+
+    @ExceptionHandler(BussinessErrorException.class)
+    public ResponseEntity<ErrorDefaultResponse> bussinessError(Exception e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        errorReponse.setTimestamp(Instant.now());
+        errorReponse.setStatus("KO");
+        errorReponse.setMessage(e.getMessage());
         return ResponseEntity.status(status).body(this.errorReponse);
     }
 
