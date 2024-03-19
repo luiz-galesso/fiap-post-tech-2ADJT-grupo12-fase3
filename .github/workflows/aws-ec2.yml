@@ -38,7 +38,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-github-action-demo:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-restaurante:latest
   deploy:
     needs: build
     runs-on: [aws-ec2]
