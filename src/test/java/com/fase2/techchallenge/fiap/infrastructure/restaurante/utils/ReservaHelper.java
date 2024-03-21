@@ -1,5 +1,6 @@
 package com.fase2.techchallenge.fiap.infrastructure.restaurante.utils;
 
+import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.entity.mesa.model.Mesa;
 import com.fase2.techchallenge.fiap.entity.mesa.model.MesaId;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
@@ -17,12 +18,16 @@ public class ReservaHelper {
         Restaurante restaurante = RestauranteHelper.gerarRestaurante(1L);
         mesa.setId(new MesaId(restaurante, 1L));
 
+        Cliente cliente = new Cliente();
+        cliente.setEmail("joao.silva@example.com");
+
        return Reserva.builder()
                .id(id)
                .dataHoraInicio(dataInicio)
                .dataHoraFinal(dataFim)
                .situacao(situacao)
                .mesa(mesa)
+               .cliente(cliente)
                .build();
     }
 

@@ -61,8 +61,6 @@ public class ReservaRepositoryTest {
 
     @Test
     void devePermitirBuscarPorSituacaoECliente() {
-        //Page<Reserva> findBySituacaoAndCliente(String situacao, Cliente cliente, Pageable pageable);
-
         //Arrange
         String situacao = "RESERVADO";
 
