@@ -1,10 +1,11 @@
-package com.fase2.techchallenge.fiap.infrastructure.restaurante.utils;
+package com.fase2.techchallenge.fiap.infrastructure.reserva.utils;
 
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.entity.mesa.model.Mesa;
 import com.fase2.techchallenge.fiap.entity.mesa.model.MesaId;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
+import com.fase2.techchallenge.fiap.infrastructure.restaurante.utils.RestauranteHelper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

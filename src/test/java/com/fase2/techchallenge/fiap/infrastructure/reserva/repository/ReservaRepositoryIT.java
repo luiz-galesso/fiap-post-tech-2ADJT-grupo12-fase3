@@ -2,7 +2,7 @@ package com.fase2.techchallenge.fiap.infrastructure.reserva.repository;
 
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
-import com.fase2.techchallenge.fiap.infrastructure.restaurante.utils.ReservaHelper;
+import com.fase2.techchallenge.fiap.infrastructure.reserva.utils.ReservaHelper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

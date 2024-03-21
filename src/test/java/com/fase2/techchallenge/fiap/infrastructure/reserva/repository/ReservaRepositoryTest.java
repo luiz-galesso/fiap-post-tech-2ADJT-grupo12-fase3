@@ -3,7 +3,7 @@ package com.fase2.techchallenge.fiap.infrastructure.reserva.repository;
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
-import com.fase2.techchallenge.fiap.infrastructure.restaurante.utils.ReservaHelper;
+import com.fase2.techchallenge.fiap.infrastructure.reserva.utils.ReservaHelper;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.utils.RestauranteHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
