@@ -23,6 +23,9 @@ public class Avaliar{
         public Avaliacao execute(AvaliacaoInsertDTO avaliacaoDTO) {
 
             Reserva reserva = reservaGateway.findById(avaliacaoDTO.getIdReserva()).orElseThrow(() -> new EntityNotFoundException("Reserva não encontrada."));
+            if (!reserva.getSituacao().equals("CHECKOUT")) {
+                throw new BussinessErrorException("Não é possível avaliar. Reserva em situação inválida.");
+            }
             if (avaliacaoDTO.getValor() < 0 || avaliacaoDTO.getValor() > 5) {
                 throw new BussinessErrorException("Valor inválido para avaliação.");
             }
