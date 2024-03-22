@@ -16,7 +16,7 @@ VALUES
 -- INSERÇÃO DE CLIENTES --
 INSERT INTO TB_CLIENTE (email, nome, data_nascimento, logradouro, numero, complemento, bairro, cep, cidade, estado, referencia, situacao, data_registro)
 VALUES
-('joao.silva@example.com', 'João da Silva', '1990-05-15', 'Rua das Flores', '123', 'Apto 101', 'Centro', 30140010, 'Belo Horizonte', 'MG', 'Próximo à Praça Central', 'ATIVO', '2024-03-18 12:00:00'),
+('joao.silva@example.com', 'João da Silva', '1990-05-15', 'Rua das Flores', '123', 'Apto 101', 'Centro', 30140010, 'Belo Horizonte', 'MG', 'Próximo à Praça Central', 'INATIVO', '2024-03-18 12:00:00'),
 ('maria.santos@example.com', 'Maria dos Santos', '1985-09-20', 'Avenida Brasil', '456', 'Casa 2', 'Jardim América', 01430000, 'São Paulo', 'SP', 'Perto do Parque Ibirapuera', 'ATIVO', '2024-03-18 12:05:00'),
 ('pedro.almeida@example.com', 'Pedro Almeida', '1988-03-10', 'Rua do Comércio', '789', 'Sala 3', 'Centro', 20040008, 'Rio de Janeiro', 'RJ', 'Ao lado da Estação de Metrô', 'ATIVO', '2024-03-18 12:10:00'),
 ('ana.ferreira@example.com', 'Ana Ferreira', '1992-11-25', 'Rua das Palmeiras', '246', 'Apto 202', 'Jardim Botânico', 40170115, 'Salvador', 'BA', 'Próximo à Praia de Ondina', 'ATIVO', '2024-03-18 12:15:00'),

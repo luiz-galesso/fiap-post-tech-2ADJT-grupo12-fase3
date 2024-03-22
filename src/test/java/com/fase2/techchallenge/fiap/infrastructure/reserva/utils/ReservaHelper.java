@@ -20,7 +20,7 @@ public class ReservaHelper {
         mesa.setId(new MesaId(restaurante, 1L));
 
         Cliente cliente = new Cliente();
-        cliente.setEmail("joao.silva@example.com");
+        cliente.setEmail("maria.santos@example.com");
 
        return Reserva.builder()
                .id(id)
