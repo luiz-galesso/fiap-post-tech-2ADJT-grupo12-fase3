@@ -34,7 +34,7 @@ public class RealizarCheckoutTest {
     }
 
     @Test
-    void deveExecutarCheckout() {
+    void deveRealizarCheckout() {
         //Arrange
         Long idReserva = 1L;
         String idCliente = "maria.santos@example.com";
