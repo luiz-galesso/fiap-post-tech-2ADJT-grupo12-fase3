@@ -2,12 +2,12 @@ package com.fase2.techchallenge.fiap.infrastructure.reserva.controller;
 
 import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.infrastructure.reserva.controller.dto.ReservaInsertDTO;
-import com.fase2.techchallenge.fiap.infrastructure.reserva.utils.ReservaHelper;
 import com.fase2.techchallenge.fiap.usecase.reserva.RealizarCheckin;
 import com.fase2.techchallenge.fiap.usecase.reserva.Reservar;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -58,10 +58,9 @@ public class ReservaControllerIT {
             .when()
                 .post("/api-restaurante/reservas")
             .then()
-                    .statusCode(HttpStatus.CREATED.value());
+                    .statusCode(HttpStatus.CREATED.value())
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/reserva/reserva.schema.json"));
         }
-
-
     }
 
     @Nested
@@ -77,7 +76,8 @@ public class ReservaControllerIT {
             when()
                     .get("/api-restaurante/reservas/{id}", reserva.getId())
             .then()
-                    .statusCode(HttpStatus.OK.value());
+                    .statusCode(HttpStatus.OK.value())
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/reserva/busca.reserva.schema.json"));
         }
 
         @Test
@@ -90,7 +90,6 @@ public class ReservaControllerIT {
             when()
                     .get("/api-restaurante/reservas/restaurante/{idRestaurante}/data/{data}", idRestaurante, formattedDate)
             .then()
-                    .log().all()
                     .statusCode(HttpStatus.OK.value());
         }
 
@@ -103,7 +102,8 @@ public class ReservaControllerIT {
             .when()
                     .get("/api-restaurante/reservas/cliente/{idCliente}", idCliente)
             .then()
-                    .statusCode(HttpStatus.OK.value());
+                    .statusCode(HttpStatus.OK.value())
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/reserva/pageable.busca.reserva.schema.json"));
         }
     }
 
@@ -120,7 +120,8 @@ public class ReservaControllerIT {
             when()
                     .put("/api-restaurante/reservas/{idReserva}/checkin/{idCliente}", reserva.getId(), reserva.getCliente().getEmail())
             .then()
-                    .statusCode(HttpStatus.OK.value());
+                    .statusCode(HttpStatus.OK.value())
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/reserva/checkin.reserva.schema.json"));
         }
 
         @Test
@@ -133,8 +134,9 @@ public class ReservaControllerIT {
 
             when()
                     .put("/api-restaurante/reservas/{idReserva}/checkout/{idCliente}", reserva.getId(), reserva.getCliente().getEmail())
-                    .then()
-                    .statusCode(HttpStatus.OK.value());
+            .then()
+                    .statusCode(HttpStatus.OK.value())
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/reserva/checkout.reserva.schema.json"));
         }
 
         @Test
@@ -146,14 +148,9 @@ public class ReservaControllerIT {
 
             when()
                     .put("/api-restaurante/reservas/{idReserva}/cancelar/{idCliente}", reserva.getId(), reserva.getCliente().getEmail())
-                    .then()
-                    .statusCode(HttpStatus.OK.value());
+            .then()
+                    .statusCode(HttpStatus.OK.value())
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/reserva/cancelar.reserva.schema.json"));
         }
-    }
-
-    public static String asJsonString(final Object object) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.findAndRegisterModules();
-        return objectMapper.writeValueAsString(object);
     }
 }
