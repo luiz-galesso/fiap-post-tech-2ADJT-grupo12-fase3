@@ -4,8 +4,6 @@ import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.infrastructure.reserva.controller.dto.ReservaInsertDTO;
 import com.fase2.techchallenge.fiap.usecase.reserva.RealizarCheckin;
 import com.fase2.techchallenge.fiap.usecase.reserva.Reservar;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.BeforeEach;
