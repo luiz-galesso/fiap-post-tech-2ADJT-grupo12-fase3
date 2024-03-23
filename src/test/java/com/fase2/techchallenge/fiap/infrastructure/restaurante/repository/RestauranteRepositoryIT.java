@@ -24,6 +24,7 @@ class RestauranteRepositoryIT {
         assertThat(totalTabelasCriadas).isNotNegative();
     }
 
+
     @Test
     void devePermitirRegistrarRestaurante(){
         Long id = 1L;
@@ -43,6 +44,20 @@ class RestauranteRepositoryIT {
 
     }
     @Test
+    void devePermitirApagarRestaurante() {
+        var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
+        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
+        var id = restaurante.getId();
+
+        restauranteRepository.deleteById(id);
+
+        var restauranteOptional = restauranteRepository.findById(id);
+
+        assertThat(restauranteOptional)
+                .isEmpty();
+    }
+
+    @Test
     void devePermitirConsultarRestaurante(){
         var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
         var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
@@ -61,20 +76,6 @@ class RestauranteRepositoryIT {
                     .isEqualTo(restaurante);
         });
 
-    }
-
-    @Test
-    void devePermitirApagarRestaurante() {
-        var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
-        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
-        var id = restaurante.getId();
-
-        restauranteRepository.deleteById(id);
-
-        var restauranteOptional = restauranteRepository.findById(id);
-
-        assertThat(restauranteOptional)
-                .isEmpty();
     }
 
     @Test
@@ -133,6 +134,16 @@ class RestauranteRepositoryIT {
 
         assertThat(resultado).hasSize(1);
 
+    }
+
+    @Test
+    void devePermitirConsultarRestaurantePorEndereco(){
+        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+
+        var resultado = restauranteRepository.findByEndereco("Av. Silva Jardim","Umuarama",82887417L,"780A");
+
+        assertThat(resultado).hasSize(1);
     }
 
 
