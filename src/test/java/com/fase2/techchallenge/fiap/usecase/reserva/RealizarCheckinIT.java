@@ -45,7 +45,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoReservaNaoPertencerAoCliente() {
+    void deveGerarExcecao_QuandoReservaNaoPertencerAoCliente() {
         //Arrange
         String idCliente = "maria.santos@example.com";
         String idClienteErr = "maria.souza@example.com";
@@ -61,7 +61,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoReservaInativa() {
+    void deveGerarExcecao_QuandoReservaInativa() {
         //Arrange
         String idCliente = "maria.santos@example.com";
 
@@ -80,7 +80,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoDataAtualForMenorQueOInicioDaReserva() {
+    void deveGerarExcecao_QuandoDataAtualForMenorQueOInicioDaReserva() {
         //Arrange
         String idCliente = "maria.santos@example.com";
 
@@ -96,7 +96,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoDataAtualForMaiorQueOInicioDaReserva() {
+    void deveGerarExcecao_QuandoDataAtualForMaiorQueOInicioDaReserva() {
         //Arrange
         String idCliente = "maria.santos@example.com";
 
