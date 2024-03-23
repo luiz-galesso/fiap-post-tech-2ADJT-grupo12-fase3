@@ -87,7 +87,7 @@ public class RealizarCheckinIT {
         String idCliente = "maria.santos@example.com";
 
         //criando reserva
-        LocalDateTime dataInicio = of(2024, 3, 23, 18, 30);
+        LocalDateTime dataInicio = LocalDateTime.now().plusHours(3);
         ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, idCliente, dataInicio, 2);
         Reserva reserva = reservar.execute(reservaInsertDTO);
 
