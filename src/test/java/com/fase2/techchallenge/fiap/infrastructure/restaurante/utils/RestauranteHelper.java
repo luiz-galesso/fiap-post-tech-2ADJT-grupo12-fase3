@@ -22,7 +22,7 @@ public abstract class RestauranteHelper {
                             )
                 .tipoCulinaria("steakhouse")
                 .capacidade(280)
-                .situacao("Ativo")
+                .situacao("ATIVO")
                 .horarioFuncionamento("19:00 - 23:00").build();
 
     }
