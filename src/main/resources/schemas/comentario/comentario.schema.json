@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "reserva": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "mesa": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "object",
+              "properties": {
+                "restaurante": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "integer"
+                    },
+                    "endereco": {
+                      "type": "object",
+                      "properties": {
+                        "logradouro": {
+                          "type": "string"
+                        },
+                        "numero": {
+                          "type": "string"
+                        },
+                        "bairro": {
+                          "type": "string"
+                        },
+                        "complemento": {
+                          "type": "null"
+                        },
+                        "cep": {
+                          "type": "integer"
+                        },
+                        "cidade": {
+                          "type": "string"
+                        },
+                        "estado": {
+                          "type": "string"
+                        },
+                        "referencia": {
+                          "type": "null"
+                        }
+                      },
+                      "required": [
+                        "logradouro",
+                        "numero",
+                        "bairro",
+                        "complemento",
+                        "cep",
+                        "cidade",
+                        "estado",
+                        "referencia"
+                      ]
+                    },
+                    "tipoCulinaria": {
+                      "type": "string"
+                    },
+                    "capacidade": {
+                      "type": "integer"
+                    },
+                    "situacao": {
+                      "type": "string"
+                    },
+                    "horarioFuncionamento": {
+                      "type": "string"
+                    },
+                    "dataRegistro": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "nome",
+                    "cnpj",
+                    "endereco",
+                    "tipoCulinaria",
+                    "capacidade",
+                    "situacao",
+                    "horarioFuncionamento",
+                    "dataRegistro"
+                  ]
+                },
+                "idMesa": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "restaurante",
+                "idMesa"
+              ]
+            },
+            "capacidade": {
+              "type": "integer"
+            },
+            "tipo": {
+              "type": "string"
+            },
+            "situacao": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "capacidade",
+            "tipo",
+            "situacao"
+          ]
+        },
+        "cliente": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "situacao": {
+              "type": "string"
+            },
+            "dataRegistro": {
+              "type": "string"
+            },
+            "dataNascimento": {
+              "type": "string"
+            },
+            "endereco": {
+              "type": "object",
+              "properties": {
+                "logradouro": {
+                  "type": "string"
+                },
+                "numero": {
+                  "type": "string"
+                },
+                "bairro": {
+                  "type": "string"
+                },
+                "complemento": {
+                  "type": "string"
+                },
+                "cep": {
+                  "type": "integer"
+                },
+                "cidade": {
+                  "type": "string"
+                },
+                "estado": {
+                  "type": "string"
+                },
+                "referencia": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "logradouro",
+                "numero",
+                "bairro",
+                "complemento",
+                "cep",
+                "cidade",
+                "estado",
+                "referencia"
+              ]
+            }
+          },
+          "required": [
+            "email",
+            "nome",
+            "situacao",
+            "dataRegistro",
+            "dataNascimento",
+            "endereco"
+          ]
+        },
+        "situacao": {
+          "type": "string"
+        },
+        "dataHoraInicio": {
+          "type": "string"
+        },
+        "dataHoraFinal": {
+          "type": "string"
+        },
+        "dataHoraCheckin": {
+          "type": "string"
+        },
+        "dataHoraCheckout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "mesa",
+        "cliente",
+        "situacao",
+        "dataHoraInicio",
+        "dataHoraFinal",
+        "dataHoraCheckin",
+        "dataHoraCheckout"
+      ]
+    },
+    "texto": {
+      "type": "string"
+    },
+    "dataRegistro": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "reserva",
+    "texto",
+    "dataRegistro"
+  ]
+}
