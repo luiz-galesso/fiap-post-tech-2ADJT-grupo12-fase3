@@ -4,6 +4,7 @@ import com.fase2.techchallenge.fiap.entity.reserva.model.Reserva;
 import com.fase2.techchallenge.fiap.infrastructure.reserva.controller.dto.ReservaInsertDTO;
 import com.fase2.techchallenge.fiap.usecase.reserva.RealizarCheckin;
 import com.fase2.techchallenge.fiap.usecase.reserva.Reservar;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +43,7 @@ public class ReservaControllerIT {
     void setup() {
         RestAssured.port = port;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.filters(new AllureRestAssured());
     }
 
     @Nested
