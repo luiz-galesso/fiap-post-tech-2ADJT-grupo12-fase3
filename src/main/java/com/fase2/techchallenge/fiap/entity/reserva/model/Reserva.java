@@ -25,19 +25,29 @@ public class Reserva {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private Mesa mesa;
 
     @ManyToOne
+    @NotNull
     private Cliente cliente;
 
+    @NotNull
     private String situacao;
 
+    @NotNull
     private LocalDateTime dataHoraInicio;
 
+    @NotNull
     private LocalDateTime dataHoraFinal;
 
-    public Reserva(Mesa mesa, String situacao, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFinal) {
+    private LocalDateTime dataHoraCheckin;
+
+    private LocalDateTime dataHoraCheckout;
+
+    public Reserva(Mesa mesa, Cliente cliente, String situacao, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFinal) {
         this.mesa = mesa;
+        this.cliente = cliente;
         this.situacao = situacao;
         this.dataHoraInicio = dataHoraInicio;
         this.dataHoraFinal = dataHoraFinal;

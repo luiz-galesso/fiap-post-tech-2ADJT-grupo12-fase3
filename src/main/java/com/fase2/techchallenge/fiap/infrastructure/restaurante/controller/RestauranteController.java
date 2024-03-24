@@ -28,17 +28,21 @@ public class RestauranteController {
 
     private final BuscarRestaurantePelaLocalizacao buscarRestaurantePelaLocalizacao;
 
+    private final AtualizarRestaurante atualizarRestaurante;
+
     public RestauranteController(
             CriarRestaurante criarRestaurante,
             ObterRestaurantePeloId obterRestaurantePeloId,
             BuscarRestaurantePeloNome buscarRestaurantePeloNome,
             BuscarRestaurantePeloTipo buscarRestaurantePeloTipo,
-            BuscarRestaurantePelaLocalizacao buscarRestaurantePelaLocalizacao) {
+            BuscarRestaurantePelaLocalizacao buscarRestaurantePelaLocalizacao,
+            AtualizarRestaurante atualizarRestaurante) {
         this.criarRestaurante = criarRestaurante;
         this.obterRestaurantePeloId = obterRestaurantePeloId;
         this.buscarRestaurantePeloNome = buscarRestaurantePeloNome;
         this.buscarRestaurantePeloTipo = buscarRestaurantePeloTipo;
         this.buscarRestaurantePelaLocalizacao = buscarRestaurantePelaLocalizacao;
+        this.atualizarRestaurante = atualizarRestaurante;
     }
 
     @Operation( summary= "Cadastra um novo restaurante", description= "Serviço utilizado para cadastrar um novo restaurante.")
@@ -87,11 +91,12 @@ public class RestauranteController {
     public ResponseEntity<?> findByEndereco(
             @RequestParam(required = false) String logradouro,
             @RequestParam(required = false) String numero,
+            @RequestParam(required = false) String bairro,
             @RequestParam(required = false) String cidade,
             @RequestParam(required = false) String estado,
             @RequestParam(required = false) Long cep) {
 
-        List<Restaurante> restaurantes = this.buscarRestaurantePelaLocalizacao.execute(new Endereco(logradouro, numero, cep, cidade, estado));
+        List<Restaurante> restaurantes = this.buscarRestaurantePelaLocalizacao.execute(new Endereco(logradouro, numero, bairro, cep, cidade, estado));
 
         if(restaurantes.isEmpty())
             return new ResponseEntity<>("Nenhum resultado foi encontrado para a busca", HttpStatus.NOT_FOUND);
@@ -99,6 +104,15 @@ public class RestauranteController {
         return new ResponseEntity<>(restaurantes, HttpStatus.OK);
     }
 
+    @Operation(summary = "Atualiza cadastro do restaurante", description = "Serviço utilizado para atualizar cadastro do restaurante")
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurante> update(@PathVariable Long id, @RequestBody RestauranteInsertDTO restauranteInsertDTO)
+    {
+        Restaurante restaurante = atualizarRestaurante.execute(id, restauranteInsertDTO);
 
+        if(restaurante == null) return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(restaurante);
+    }
 
 }

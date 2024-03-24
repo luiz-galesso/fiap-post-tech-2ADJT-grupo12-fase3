@@ -13,7 +13,9 @@ public class ReservaInsertDTO {
 
     private Long idMesa;
 
+    private String idCliente;
+
     private LocalDateTime dataHoraInicio;
 
-    private LocalDateTime dataHoraFinal;
+    private Integer quantidadeHoras;
 }

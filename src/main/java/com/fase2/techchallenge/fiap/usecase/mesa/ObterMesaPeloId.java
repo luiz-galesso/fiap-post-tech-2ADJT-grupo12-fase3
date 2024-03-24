@@ -4,6 +4,7 @@ import com.fase2.techchallenge.fiap.entity.mesa.gateway.MesaGateway;
 import com.fase2.techchallenge.fiap.entity.mesa.model.Mesa;
 import com.fase2.techchallenge.fiap.entity.mesa.model.MesaId;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
+import com.fase2.techchallenge.fiap.usecase.exception.EntityNotFoundException;
 import com.fase2.techchallenge.fiap.usecase.restaurante.ObterRestaurantePeloId;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class ObterMesaPeloId {
 
     public Mesa execute(Long idRestaurante, Long idMesa) {
         Restaurante restaurante = obterRestaurantePeloId.execute(idRestaurante);
-        return this.mesaGateway.findById(new MesaId(restaurante, idMesa)).orElseThrow();
+        return this.mesaGateway.findById(new MesaId(restaurante, idMesa)).orElseThrow(() -> new EntityNotFoundException("Mesa não encontrada."));
     }
 
 
