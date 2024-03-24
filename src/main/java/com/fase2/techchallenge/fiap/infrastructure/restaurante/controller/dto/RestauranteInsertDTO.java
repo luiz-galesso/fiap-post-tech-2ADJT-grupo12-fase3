@@ -1,9 +1,11 @@
 package com.fase2.techchallenge.fiap.infrastructure.restaurante.controller.dto;
 
 import com.fase2.techchallenge.fiap.entity.endereco.model.Endereco;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class RestauranteInsertDTO {
 
     private String nome;

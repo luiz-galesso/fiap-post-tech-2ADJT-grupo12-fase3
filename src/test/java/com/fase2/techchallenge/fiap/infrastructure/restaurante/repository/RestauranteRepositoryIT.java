@@ -42,7 +42,6 @@ class RestauranteRepositoryIT {
 
         assertThat(restauranteArmazenado.getId())
                 .isNotNull();
-
     }
     @Test
     void devePermitirApagarRestaurante() {
