@@ -19,7 +19,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ComentarioGatewayTest {
 
     @Mock
