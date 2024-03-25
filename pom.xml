@@ -224,6 +224,7 @@
                         <version>4.3.7</version>
                         <configuration>
                             <simulationClass>com.fase2.techchallenge.fiap.performance.ReservaPerformanceTest</simulationClass>
+                            <simulationClass>com.fase2.techchallenge.fiap.performance.ComentarioPerformanceTest</simulationClass>
                         </configuration>
                     </plugin>
                 </plugins>
