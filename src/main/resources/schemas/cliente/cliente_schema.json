@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "nome": {
+      "type": "string"
+    },
+    "situacao": {
+      "type": "string"
+    },
+    "dataRegistro": {
+      "type": "string"
+    },
+    "dataNascimento": {
+      "type": "string"
+    },
+    "endereco": {
+      "type": "object",
+      "properties": {
+        "logradouro": {
+          "type": "string"
+        },
+        "numero": {
+          "type": "string"
+        },
+        "bairro": {
+          "type": "string"
+        },
+        "complemento": {
+          "type": "string"
+        },
+        "cep": {
+          "type": "integer"
+        },
+        "cidade": {
+          "type": "string"
+        },
+        "estado": {
+          "type": "string"
+        },
+        "referencia": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "logradouro",
+        "numero",
+        "bairro",
+        "complemento",
+        "cep",
+        "cidade",
+        "estado",
+        "referencia"
+      ]
+    }
+  },
+  "required": [
+    "email",
+    "nome",
+    "situacao",
+    "dataRegistro",
+    "dataNascimento",
+    "endereco"
+  ]
+}

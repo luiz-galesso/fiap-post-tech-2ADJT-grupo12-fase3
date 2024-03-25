@@ -5,6 +5,7 @@ import com.fase2.techchallenge.fiap.infrastructure.reserva.controller.dto.Reserv
 import com.fase2.techchallenge.fiap.infrastructure.reserva.utils.ReservaHelper;
 import com.fase2.techchallenge.fiap.usecase.reserva.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +13,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -54,7 +57,10 @@ public class ReservaControllerTest {
     void setup() {
         mock = MockitoAnnotations.openMocks(this);
         ReservaController reservaController = new ReservaController(reservar, obterReservaPeloId, buscarReservaPorRestauranteEData, realizarCheckin, realizarCheckout, cancelarReserva, buscarReservasAtivasPorCliente);
-        mockMvc = MockMvcBuilders.standaloneSetup(reservaController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(reservaController)
+                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                .build();
+
     }
 
     @AfterEach
@@ -124,21 +130,21 @@ public class ReservaControllerTest {
         void devePermitirBuscarReservasAtivasPorCliente() throws Exception {
             //Arrange
             String idCliente = "maria.santos@example.com";
-            PageRequest pageable = PageRequest.of(0, 1);
 
             List<Reserva> reservas = ReservaHelper.gerarLista();
 
-            Page<Reserva> pages = new PageImpl<>(reservas);
+            Pageable pageable = PageRequest.of(0, 1); // Página 0, tamanho 1
+            Page<Reserva> pages = new PageImpl<>(reservas, pageable, reservas.size());
 
             when(buscarReservasAtivasPorCliente.execute(any(String.class), any(Pageable.class))).thenReturn(pages);
             //Act
 
             mockMvc.perform(
                     get("/reservas/cliente/{idCliente}", idCliente)
-                            .param("page", String.valueOf(pageable.getPageNumber()))
-                            .param("size", String.valueOf(pageable.getPageSize()))
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON)
+                            .queryParam("page", String.valueOf(pageable.getPageNumber()))
+                            .queryParam("size", String.valueOf(pageable.getPageSize()))
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .accept(MediaType.APPLICATION_JSON_VALUE)
             ).andExpect(status().isOk());
 
             //Assert
