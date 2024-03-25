@@ -48,7 +48,7 @@ jobs:
       - name: Delete old container
         run: sudo docker rm -f api-restaurante-container
       - name: Run Docker Image
-        run: sudo docker run -d -p 8080:8080 --name api-restaurante-container luizgalesso/api-restaurante
+        run: sudo docker run -d -p 8080:8080 --name api-restaurante-container lag1985/api-restaurante
   deploy_render:
     needs: build
     runs-on: ubuntu-latest
@@ -59,4 +59,3 @@ jobs:
           service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
           api-key: ${{ secrets.MY_RENDER_API_KEY }}
           wait-for-success: true
-        run: sudo docker run -d -p 8080:8080 --name api-restaurante-container lag1985/api-restaurante
