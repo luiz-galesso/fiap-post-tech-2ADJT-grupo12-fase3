@@ -18,6 +18,8 @@ public abstract class RestauranteHelper {
                                 .cidade("Umuarama")
                                 .estado("PR")
                                 .referencia("Posto Ipiranga")
+                                .complemento("Andar Superior")
+                                .bairro("centro")
                                 .build()
                             )
                 .tipoCulinaria("steakhouse")
