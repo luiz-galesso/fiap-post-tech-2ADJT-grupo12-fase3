@@ -1,7 +1,7 @@
 package com.fase2.techchallenge.fiap.usecase.restaurante;
 
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
-import com.fase2.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteInsertDTO;
+import com.fase2.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteUpdateDTO;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.repository.RestauranteRepository;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.utils.RestauranteHelper;
 import jakarta.transaction.Transactional;
@@ -29,7 +29,7 @@ public class AtualizarRestauranteIT {
         void deveAtualizarRestaurante() {
             var restauranteDesatualizado = RestauranteHelper.registrarRestaurante(restauranteRepository, RestauranteHelper.gerarRestaurante(null));
             var restauranteDesatualizadoSituacao = restauranteDesatualizado.getSituacao();
-            var restauranteInsertDTO = new RestauranteInsertDTO(restauranteDesatualizado.getNome()
+            var restauranteUpdateDTO = new RestauranteUpdateDTO(restauranteDesatualizado.getNome()
                     , restauranteDesatualizado.getCnpj()
                     , restauranteDesatualizado.getEndereco()
                     , restauranteDesatualizado.getTipoCulinaria()
@@ -37,7 +37,7 @@ public class AtualizarRestauranteIT {
                     , "INATIVO"
                     , restauranteDesatualizado.getHorarioFuncionamento());
 
-            var resultado = atualizarRestaurante.execute(restauranteDesatualizado.getId(),restauranteInsertDTO);
+            var resultado = atualizarRestaurante.execute(restauranteDesatualizado.getId(),restauranteUpdateDTO);
 
             assertThat(resultado)
                     .isNotNull()

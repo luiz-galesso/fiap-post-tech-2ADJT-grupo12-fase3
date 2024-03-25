@@ -2,7 +2,7 @@ package com.fase2.techchallenge.fiap.usecase.restaurante;
 
 import com.fase2.techchallenge.fiap.entity.restaurante.gateway.RestauranteGateway;
 import com.fase2.techchallenge.fiap.entity.restaurante.model.Restaurante;
-import com.fase2.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteInsertDTO;
+import com.fase2.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteUpdateDTO;
 import com.fase2.techchallenge.fiap.infrastructure.restaurante.utils.RestauranteHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ public class AtualizarRestauranteTest {
             var restauranteDesatualizadoSituacao = restauranteDesatualizado.getSituacao();
             var restauranteAtualizado = RestauranteHelper.gerarRestaurante(1L);
             restauranteAtualizado.setSituacao("INATIVO");
-            var restauranteInsertDTO = new RestauranteInsertDTO(restauranteDesatualizado.getNome()
+            var restauranteUpdateDTO = new RestauranteUpdateDTO(restauranteDesatualizado.getNome()
                     , restauranteDesatualizado.getCnpj()
                     , restauranteDesatualizado.getEndereco()
                     , restauranteDesatualizado.getTipoCulinaria()
@@ -54,7 +54,7 @@ public class AtualizarRestauranteTest {
 
             when(restauranteGateway.update(any(Restaurante.class))).thenReturn(restauranteAtualizado);
 
-            var resultado = atualizarRestaurante.execute(restauranteDesatualizado.getId(), restauranteInsertDTO);
+            var resultado = atualizarRestaurante.execute(restauranteDesatualizado.getId(), restauranteUpdateDTO);
 
             assertThat(resultado)
                     .isInstanceOf(Restaurante.class)
@@ -76,11 +76,11 @@ public class AtualizarRestauranteTest {
         @Test
         void naoDeveAtualizarSeNaoEncontrarRestaurante() {
             var restauranteDesatualizado = RestauranteHelper.gerarRestaurante(1L);
-            var restauranteInsertDTO = new RestauranteInsertDTO();
+            var restauranteUpdateDTO = new RestauranteUpdateDTO();
 
             when(restauranteGateway.findById(any(Long.class))).thenReturn(Optional.empty());
 
-            var resultado = atualizarRestaurante.execute(restauranteDesatualizado.getId(), restauranteInsertDTO);
+            var resultado = atualizarRestaurante.execute(restauranteDesatualizado.getId(), restauranteUpdateDTO);
 
             assertThat(resultado)
                     .isNull();

@@ -51,6 +51,7 @@ public class CriarRestauranteTest {
 
             assertThat(restauranteInserido)
                     .isNotNull()
+
                     .isInstanceOf(Restaurante.class);
 
             assertThat(restauranteInserido)
