@@ -3,9 +3,9 @@ package com.fase2.techchallenge.fiap.usecase.cliente;
 import com.fase2.techchallenge.fiap.entity.cliente.gateway.ClienteGateway;
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.entity.endereco.model.Endereco;
-import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteInsertDTO;
-import com.fase2.techchallenge.fiap.utils.ClienteHelper;
+import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteUpdateDTO;
 import com.fase2.techchallenge.fiap.usecase.exception.BussinessErrorException;
+import com.fase2.techchallenge.fiap.utils.ClienteHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class AtualizarClienteTest {
 
@@ -45,8 +45,7 @@ public class AtualizarClienteTest {
         when(clienteGateway.findById(cliente.getEmail())).thenReturn(Optional.of(cliente));
         when(clienteGateway.update(any(Cliente.class))).thenReturn(cliente);
 
-        ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                , "João Wick Silva"
+        ClienteUpdateDTO ClienteUpdateDTO = new ClienteUpdateDTO("João Wick Silva"
                 , cliente.getSituacao()
                 , cliente.getDataNascimento()
                 , Endereco.builder()
@@ -59,25 +58,28 @@ public class AtualizarClienteTest {
                 .estado("SP")
                 .build());
 
-        var clienteAlterado = atualizarCliente.execute(cliente.getEmail(), clienteInsertDTO);
+        var clienteAlterado = atualizarCliente.execute(cliente.getEmail(), ClienteUpdateDTO);
 
         assertThat(clienteAlterado).isInstanceOf(Cliente.class).isNotNull();
-        assertThat(clienteAlterado).isEqualTo(cliente);
+        assertThat(clienteAlterado).usingRecursiveComparison().ignoringFields("email","dataRegistro").isEqualTo(cliente);
+        verify(clienteGateway, times(1)).findById(any(String.class));
+        verify(clienteGateway, times(1)).update(any(Cliente.class));
     }
 
     @Test
     void deveGerarExcecao_QuandoAlterarCliente_IdNaoExiste() {
         var cliente = ClienteHelper.gerarCliente("joao-wick@email.com", "Joao Wick da Silva", "ATIVO", LocalDate.of(1990, 05, 19));
-        ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                , cliente.getNome()
+        ClienteUpdateDTO ClienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                 , cliente.getSituacao()
                 , cliente.getDataNascimento()
                 , cliente.getEndereco());
 
         when(clienteGateway.findById(cliente.getEmail())).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> atualizarCliente.execute(cliente.getEmail(), clienteInsertDTO))
+        assertThatThrownBy(() -> atualizarCliente.execute(cliente.getEmail(), ClienteUpdateDTO))
                 .isInstanceOf(BussinessErrorException.class).hasMessage("Não foi encontrado o cliente cadastrado com o email informado.");
+        verify(clienteGateway, times(1)).findById(any(String.class));
+        verify(clienteGateway, never()).update(any(Cliente.class));
     }
 
 }

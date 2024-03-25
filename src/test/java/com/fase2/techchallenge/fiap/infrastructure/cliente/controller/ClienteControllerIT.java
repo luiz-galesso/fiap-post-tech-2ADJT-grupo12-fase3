@@ -1,9 +1,9 @@
 package com.fase2.techchallenge.fiap.infrastructure.cliente.controller;
 
 import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteInsertDTO;
-import com.fase2.techchallenge.fiap.utils.ClienteHelper;
+import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteUpdateDTO;
 import com.fase2.techchallenge.fiap.usecase.cliente.CadastrarCliente;
-import io.cucumber.core.internal.com.fasterxml.jackson.databind.ObjectMapper;
+import com.fase2.techchallenge.fiap.utils.ClienteHelper;
 import io.restassured.RestAssured;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +87,7 @@ public class ClienteControllerIT {
 
         @Test
         void devePermitirBuscarCliente() throws Exception {
-            var id = "eduardo.melo@example.com";
+            var id = "ricardo.santana@example.com";
             when()
                     .get("/api-restaurante/clientes/{id}", id)
                     .then()
@@ -110,20 +110,19 @@ public class ClienteControllerIT {
         @Test
         void devePermitirAlterarCliente() throws Exception {
             var cliente = ClienteHelper.gerarCliente("joao-wick@email.com", "Joao Wick da Silva", "ATIVO", LocalDate.of(1990, 05, 19));
-            ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                    , cliente.getNome()
+            ClienteUpdateDTO clienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                     , cliente.getSituacao()
                     , cliente.getDataNascimento()
                     , cliente.getEndereco());
 
-            cadastrarCliente.execute(clienteInsertDTO);
+            cadastrarCliente.execute(new ClienteInsertDTO(cliente.getEmail(), cliente.getNome(), cliente.getSituacao(), cliente.getDataNascimento(), cliente.getEndereco()));
 
             given()
                     //.filter(new AllureRestAssured())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .body(clienteInsertDTO)
+                    .body(clienteUpdateDTO)
                     .when()
-                    .put("/api-restaurante/clientes/{id}", clienteInsertDTO.getEmail())
+                    .put("/api-restaurante/clientes/{id}", cliente.getEmail())
                     .then()
                     .statusCode(HttpStatus.ACCEPTED.value())
                     .body(matchesJsonSchemaInClasspath("schemas/cliente/cliente_schema.json"));
@@ -132,22 +131,42 @@ public class ClienteControllerIT {
         @Test
         void deveGerarExcecao_QuandoAlterarCliente_ClienteNaoCadastrado() throws Exception {
             var cliente = ClienteHelper.gerarCliente("joao-wick@email.com", "Joao Wick da Silva", "ATIVO", LocalDate.of(1990, 05, 19));
-            ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                    , cliente.getNome()
+            ClienteUpdateDTO clienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                     , cliente.getSituacao()
                     , cliente.getDataNascimento()
                     , cliente.getEndereco());
 
             given()
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .body(clienteInsertDTO)
+                    .body(clienteUpdateDTO)
                     .when()
-                    .put("/api-restaurante/clientes/{id}", clienteInsertDTO.getEmail())
+                    .put("/api-restaurante/clientes/{id}", cliente.getEmail())
                     .then()
-                    .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value());
         }
 
+    }
+
+    @Nested
+    class RemoverCliente {
+
+        @Test
+        void devePermitirRemoverCliente() throws Exception {
+            var id = "felipe.albuquerque@example.com";
+            when()
+                    .delete("/api-restaurante/clientes/{id}", id)
+                    .then()
+                    .statusCode(HttpStatus.OK.value());
+        }
+
+        @Test
+        void deveGerarExcecao_QuandoRemoverCliente_IdNaoExiste() throws Exception {
+            var id = "joao.wick@email.com";
+            given().when()
+                    .delete("/api-restaurante/clientes/{id}", id)
+                    .then()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
     }
 
 }

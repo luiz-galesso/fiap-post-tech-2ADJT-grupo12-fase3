@@ -1,12 +1,14 @@
 package com.fase2.techchallenge.fiap.infrastructure.cliente.controller;
 
 import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteInsertDTO;
-import com.fase2.techchallenge.fiap.utils.ClienteHelper;
+import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteUpdateDTO;
 import com.fase2.techchallenge.fiap.usecase.cliente.AtualizarCliente;
 import com.fase2.techchallenge.fiap.usecase.cliente.CadastrarCliente;
 import com.fase2.techchallenge.fiap.usecase.cliente.ObterClientePeloId;
+import com.fase2.techchallenge.fiap.usecase.cliente.RemoverClientePeloId;
 import com.fase2.techchallenge.fiap.usecase.exception.BussinessErrorException;
 import com.fase2.techchallenge.fiap.usecase.exception.EntityNotFoundException;
+import com.fase2.techchallenge.fiap.utils.ClienteHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -24,6 +26,7 @@ import java.time.LocalDate;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,6 +37,8 @@ public class ClienteControllerTest {
     AtualizarCliente atualizarCliente;
     @Mock
     ObterClientePeloId obterClientePeloId;
+    @Mock
+    RemoverClientePeloId removerClientePeloId;
     private MockMvc mockMvc;
 
     AutoCloseable mock;
@@ -41,7 +46,7 @@ public class ClienteControllerTest {
     @BeforeEach
     void setup() {
         mock = MockitoAnnotations.openMocks(this);
-        ClienteController clienteController = new ClienteController(cadastrarCliente, atualizarCliente, obterClientePeloId);
+        ClienteController clienteController = new ClienteController(cadastrarCliente, atualizarCliente, obterClientePeloId, removerClientePeloId);
 
         mockMvc = MockMvcBuilders.standaloneSetup(clienteController)
                 .addFilter((request, response, chain) -> {
@@ -137,42 +142,68 @@ public class ClienteControllerTest {
         @Test
         void devePermitirAlterarCliente() throws Exception {
             var cliente = ClienteHelper.gerarCliente("eduardo.melo@example.com", "Eduardo Melo", "ATIVO", LocalDate.of(1993, 11, 02));
-            ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                    , cliente.getNome()
+            ClienteUpdateDTO clienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                     , cliente.getSituacao()
                     , cliente.getDataNascimento()
                     , cliente.getEndereco());
-            when(atualizarCliente.execute(any(String.class), any(ClienteInsertDTO.class))).thenReturn(cliente);
+            when(atualizarCliente.execute(any(String.class), any(ClienteUpdateDTO.class))).thenReturn(cliente);
 
             mockMvc.perform(put("/clientes/{id}", cliente.getEmail())
-                            .content(asJsonString(clienteInsertDTO))
+                            .content(asJsonString(clienteUpdateDTO))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isAccepted());
 
-            verify(atualizarCliente, times(1)).execute(any(String.class), any(ClienteInsertDTO.class));
+            verify(atualizarCliente, times(1)).execute(any(String.class), any(ClienteUpdateDTO.class));
 
         }
 
         @Test
         void deveGerarExcecao_QuandoAlterarCliente_ClienteNaoCadastrado() throws Exception {
             var cliente = ClienteHelper.gerarCliente("jarlan-silva@email.com", "Jarlan Silva", "ATIVO", LocalDate.of(1983, 12, 27));
-            ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                    , cliente.getNome()
+            ClienteUpdateDTO clienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                     , cliente.getSituacao()
                     , cliente.getDataNascimento()
                     , cliente.getEndereco());
 
             var excecao = "Não foi encontrado o cliente cadastrado com o email informado.";
-            when(atualizarCliente.execute(cliente.getEmail(), clienteInsertDTO))
+            when(atualizarCliente.execute(cliente.getEmail(), clienteUpdateDTO))
                     .thenThrow(new BussinessErrorException(excecao));
 
             mockMvc.perform(put("/clientes/{id}", cliente.getEmail())
-                            .content(asJsonString(clienteInsertDTO))
+                            .content(asJsonString(clienteUpdateDTO))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string(excecao));
 
-            verify(atualizarCliente, times(1)).execute(any(String.class), any(ClienteInsertDTO.class));
+            verify(atualizarCliente, times(1)).execute(any(String.class), any(ClienteUpdateDTO.class));
+
+        }
+    }
+
+    @Nested
+    class RemoverCliente {
+
+        @Test
+        void devePermitirRemoverCliente() throws Exception {
+            var id = "eduardo.melo@example.com";
+
+            when(removerClientePeloId.execute(id)).thenReturn(true);
+            mockMvc.perform(delete("/clientes/{id}", id))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string("Cliente Removido"));
+            verify(removerClientePeloId, times(1)).execute(any(String.class));
+        }
+
+        @Test
+        void deveGerarExcecao_QuandoRemoverCliente_IdNaoExiste() throws Exception {
+            var id = "joao.wick";
+            when(obterClientePeloId.execute(id)).thenThrow(BussinessErrorException.class);
+
+            when(removerClientePeloId.execute(id)).thenThrow(BussinessErrorException.class);
+
+            mockMvc.perform(delete("/clientes/{id}", id))
+                    .andExpect(status().isBadRequest());
+            verify(removerClientePeloId, times(1)).execute(any(String.class));
 
         }
     }

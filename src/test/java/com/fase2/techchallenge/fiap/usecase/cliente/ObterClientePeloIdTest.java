@@ -15,8 +15,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 public class ObterClientePeloIdTest {
     @Mock
@@ -44,6 +45,7 @@ public class ObterClientePeloIdTest {
 
         assertThat(clienteRetornado).isNotNull().isInstanceOf(Cliente.class);
         assertThat(clienteRetornado.getEmail()).isEqualTo(cliente.getEmail());
+        verify(clienteGateway, times(1)).findById(any(String.class));
     }
 
     @Test
@@ -55,5 +57,6 @@ public class ObterClientePeloIdTest {
         assertThatThrownBy(() -> obterClientePeloId.execute(id))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Cliente não localizado");
+        verify(clienteGateway, times(1)).findById(any(String.class));
     }
 }

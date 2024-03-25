@@ -2,6 +2,7 @@ package com.fase2.techchallenge.fiap.usecase.cliente;
 
 import com.fase2.techchallenge.fiap.entity.endereco.model.Endereco;
 import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteInsertDTO;
+import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteUpdateDTO;
 import com.fase2.techchallenge.fiap.infrastructure.cliente.repository.ClienteRepository;
 import com.fase2.techchallenge.fiap.utils.ClienteHelper;
 import com.fase2.techchallenge.fiap.usecase.exception.BussinessErrorException;
@@ -41,30 +42,27 @@ public class AtualizarClienteIT {
                 .cidade("São Paulo")
                 .estado("SP")
                 .build());
-        ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                , cliente.getNome()
+        ClienteUpdateDTO clienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                 , cliente.getSituacao()
                 , cliente.getDataNascimento()
                 , cliente.getEndereco());
 
-        var clienteAlterado = atualizarCliente.execute(cliente.getEmail(), clienteInsertDTO);
+        var clienteAlterado = atualizarCliente.execute(cliente.getEmail(), clienteUpdateDTO);
 
         assertThat(clienteAlterado).isNotNull();
-        assertThat(clienteAlterado.getNome()).isEqualTo(clienteAtual.get().getNome());
-        assertThat(clienteAlterado.getSituacao()).isEqualTo(cliente.getSituacao());
-        assertThat(clienteAlterado.getEndereco()).isEqualTo(cliente.getEndereco());
+        assertThat(clienteAlterado).usingRecursiveComparison().ignoringFields("email","dataRegistro").isEqualTo(cliente);
+
     }
 
     @Test
     void deveGerarExcecao_QuandoAlterarCliente_ClienteNaoCadastrado() {
         var cliente = ClienteHelper.gerarCliente("joao-wick@email.com", "Joao Wick da Silva", "ATIVO", LocalDate.of(1990, 05, 19));
-        ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
-                , cliente.getNome()
+        ClienteUpdateDTO clienteUpdateDTO = new ClienteUpdateDTO(cliente.getNome()
                 , cliente.getSituacao()
                 , cliente.getDataNascimento()
                 , cliente.getEndereco());
 
-        assertThatThrownBy(() -> atualizarCliente.execute(cliente.getEmail(), clienteInsertDTO))
+        assertThatThrownBy(() -> atualizarCliente.execute(cliente.getEmail(), clienteUpdateDTO))
                 .isInstanceOf(BussinessErrorException.class)
                 .hasMessage("Não foi encontrado o cliente cadastrado com o email informado.");
 
