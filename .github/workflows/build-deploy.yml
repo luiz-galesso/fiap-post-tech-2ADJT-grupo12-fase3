@@ -1,8 +1,8 @@
-name: Deploy AWS EC2
+name: Build e Deploy
 
 on:
   push:
-    branches: [aws-ec2]
+    branches: [master]
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-github-action-demo:latest
-  deploy:
+  deploy_aws:
     needs: build
     runs-on: [aws-ec2]
     steps:
@@ -49,3 +49,13 @@ jobs:
         run: sudo docker rm -f api-restaurante-container
       - name: Run Docker Image
         run: sudo docker run -d -p 8080:8080 --name api-restaurante-container luizgalesso/api-restaurante
+  deploy_render:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
