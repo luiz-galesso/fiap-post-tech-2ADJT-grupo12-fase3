@@ -38,13 +38,13 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-github-action-demo:latest
-  deploy_aws:
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-restaurante:latest
+  deploy:
     needs: build
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: sudo docker pull luizgalesso/api-restaurante:latest
+        run: sudo docker pull lag1985/api-restaurante:latest
       - name: Delete old container
         run: sudo docker rm -f api-restaurante-container
       - name: Run Docker Image
@@ -59,3 +59,4 @@ jobs:
           service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
           api-key: ${{ secrets.MY_RENDER_API_KEY }}
           wait-for-success: true
+        run: sudo docker run -d -p 8080:8080 --name api-restaurante-container lag1985/api-restaurante
