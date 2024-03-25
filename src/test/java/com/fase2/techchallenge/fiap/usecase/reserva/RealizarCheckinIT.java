@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @AutoConfigureTestDatabase
 @Transactional
+@ActiveProfiles("test")
 public class RealizarCheckinIT {
 
     @Autowired
@@ -45,7 +47,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoReservaNaoPertencerAoCliente() {
+    void deveGerarExcecao_QuandoReservaNaoPertencerAoCliente() {
         //Arrange
         String idCliente = "maria.santos@example.com";
         String idClienteErr = "maria.souza@example.com";
@@ -61,7 +63,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoReservaInativa() {
+    void deveGerarExcecao_QuandoReservaInativa() {
         //Arrange
         String idCliente = "maria.santos@example.com";
 
@@ -80,12 +82,12 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoDataAtualForMenorQueOInicioDaReserva() {
+    void deveGerarExcecao_QuandoDataAtualForMenorQueOInicioDaReserva() {
         //Arrange
         String idCliente = "maria.santos@example.com";
 
         //criando reserva
-        LocalDateTime dataInicio = of(2024, 3, 23, 18, 30);
+        LocalDateTime dataInicio = LocalDateTime.now().plusHours(3);
         ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, idCliente, dataInicio, 2);
         Reserva reserva = reservar.execute(reservaInsertDTO);
 
@@ -96,7 +98,7 @@ public class RealizarCheckinIT {
     }
 
     @Test
-    void deveGerarExecao_QuandoDataAtualForMaiorQueOInicioDaReserva() {
+    void deveGerarExcecao_QuandoDataAtualForMaiorQueOInicioDaReserva() {
         //Arrange
         String idCliente = "maria.santos@example.com";
 

@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "id",
+    "mesa",
+    "cliente",
+    "situacao",
+    "dataHoraInicio",
+    "dataHoraFinal",
+    "dataHoraCheckin",
+    "dataHoraCheckout"
+  ],
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "mesa": {
+      "type": "object",
+      "required": [
+        "id",
+        "capacidade",
+        "tipo",
+        "situacao"
+      ],
+      "properties": {
+        "id": {
+          "type": "object",
+          "required": [
+            "restaurante",
+            "idMesa"
+          ],
+          "properties": {
+            "restaurante": {
+              "type": "object",
+              "required": [
+                "id",
+                "nome",
+                "cnpj",
+                "endereco",
+                "tipoCulinaria",
+                "capacidade",
+                "situacao",
+                "horarioFuncionamento",
+                "dataRegistro"
+              ],
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "nome": {
+                  "type": "string"
+                },
+                "cnpj": {
+                  "type": "number"
+                },
+                "endereco": {
+                  "type": "object",
+                  "required": [
+                    "logradouro",
+                    "numero",
+                    "bairro",
+                    "complemento",
+                    "cep",
+                    "cidade",
+                    "estado",
+                    "referencia"
+                  ],
+                  "properties": {
+                    "logradouro": {
+                      "type": "string"
+                    },
+                    "numero": {
+                      "type": "string"
+                    },
+                    "bairro": {
+                      "type": "string"
+                    },
+                    "complemento": {
+                      "type": "null"
+                    },
+                    "cep": {
+                      "type": "number"
+                    },
+                    "cidade": {
+                      "type": "string"
+                    },
+                    "estado": {
+                      "type": "string"
+                    },
+                    "referencia": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "tipoCulinaria": {
+                  "type": "string"
+                },
+                "capacidade": {
+                  "type": "number"
+                },
+                "situacao": {
+                  "type": "string"
+                },
+                "horarioFuncionamento": {
+                  "type": "string"
+                },
+                "dataRegistro": {
+                  "type": "string"
+                }
+              }
+            },
+            "idMesa": {
+              "type": "number"
+            }
+          }
+        },
+        "capacidade": {
+          "type": "number"
+        },
+        "tipo": {
+          "type": "string"
+        },
+        "situacao": {
+          "type": "string"
+        }
+      }
+    },
+    "cliente": {
+      "type": "object",
+      "required": [
+        "email",
+        "nome",
+        "situacao",
+        "dataRegistro",
+        "dataNascimento",
+        "endereco"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "situacao": {
+          "type": "string"
+        },
+        "dataRegistro": {
+          "type": "string"
+        },
+        "dataNascimento": {
+          "type": "string"
+        },
+        "endereco": {
+          "type": "object",
+          "required": [
+            "logradouro",
+            "numero",
+            "bairro",
+            "complemento",
+            "cep",
+            "cidade",
+            "estado",
+            "referencia"
+          ],
+          "properties": {
+            "logradouro": {
+              "type": "string"
+            },
+            "numero": {
+              "type": "string"
+            },
+            "bairro": {
+              "type": "string"
+            },
+            "complemento": {
+              "type": "string"
+            },
+            "cep": {
+              "type": "number"
+            },
+            "cidade": {
+              "type": "string"
+            },
+            "estado": {
+              "type": "string"
+            },
+            "referencia": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "situacao": {
+      "type": "string",
+      "default": "CHECKIN"
+    },
+    "dataHoraInicio": {
+      "type": "string"
+    },
+    "dataHoraFinal": {
+      "type": "string"
+    },
+    "dataHoraCheckin": {
+      "type": "string"
+    },
+    "dataHoraCheckout": {
+      "type": "null"
+    }
+  }
+}
