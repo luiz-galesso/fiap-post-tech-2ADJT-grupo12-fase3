@@ -24,7 +24,7 @@ public class AvaliacaoGatewayIT {
     private AvaliacaoGateway avaliacaoGateway;
     @Test
     void devePermitirCriarAvaliacao() {
-        var avaliacao = AvaliacaoHelper.gerarAvaliacao(null);
+        var avaliacao = AvaliacaoHelper.registrarAvaliacao(avaliacaoRepository,AvaliacaoHelper.gerarAvaliacao(null));
 
         var restauranteArmazenado = avaliacaoGateway.create(avaliacao);
 
