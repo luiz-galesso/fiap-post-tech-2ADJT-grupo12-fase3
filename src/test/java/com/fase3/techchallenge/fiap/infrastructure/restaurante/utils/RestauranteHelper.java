@@ -18,16 +18,18 @@ public abstract class RestauranteHelper {
                                 .cidade("Umuarama")
                                 .estado("PR")
                                 .referencia("Posto Ipiranga")
+                                .complemento("Andar Superior")
+                                .bairro("centro")
                                 .build()
                             )
                 .tipoCulinaria("steakhouse")
                 .capacidade(280)
-                .situacao("Ativo")
+                .situacao("ATIVO")
                 .horarioFuncionamento("19:00 - 23:00").build();
 
     }
 
-    public static Restaurante registrarRestaurante(RestauranteRepository restauranteRepository, Restaurante restaurante){
+    public static Restaurante registrarRestaurante(RestauranteRepository restauranteRepository, Restaurante restaurante) {
         return restauranteRepository.save(restaurante);
     }
 }

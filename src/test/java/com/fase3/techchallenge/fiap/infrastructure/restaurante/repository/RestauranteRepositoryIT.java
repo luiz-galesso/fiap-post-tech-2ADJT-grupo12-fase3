@@ -4,6 +4,7 @@ import com.fase3.techchallenge.fiap.entity.restaurante.model.Restaurante;
 import com.fase3.techchallenge.fiap.infrastructure.restaurante.utils.RestauranteHelper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Nested;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,7 @@ class RestauranteRepositoryIT {
         assertThat(totalTabelasCriadas).isNotNegative();
     }
 
+
     @Test
     void devePermitirRegistrarRestaurante(){
         Long id = 1L;
@@ -40,29 +42,7 @@ class RestauranteRepositoryIT {
 
         assertThat(restauranteArmazenado.getId())
                 .isNotNull();
-
     }
-    @Test
-    void devePermitirConsultarRestaurante(){
-        var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
-        var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
-
-        var id = restaurante.getId();
-
-        var restauranteOptional = restauranteRepository.findById(id);
-
-        assertThat(restauranteOptional)
-                .isPresent()
-                .containsSame(restaurante);
-
-        restauranteOptional.ifPresent(restauranteArmazenado -> {
-            assertThat(restauranteArmazenado)
-                    .usingRecursiveComparison()
-                    .isEqualTo(restaurante);
-        });
-
-    }
-
     @Test
     void devePermitirApagarRestaurante() {
         var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
@@ -77,62 +57,88 @@ class RestauranteRepositoryIT {
                 .isEmpty();
     }
 
-    @Test
-    void devePermitirListarRestaurantes(){
-        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
-        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
-        var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
-        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
-        var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
-        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
 
-        var resultado = restauranteRepository.findAll();
+    @Nested
+    class ConsultarRestaurantes {
+        @Test
+        void devePermitirListarRestaurantes() {
+            var resultado = restauranteRepository.findAll();
 
-        assertThat(resultado)
-                .hasSize(3);
-    }
+            assertThat(resultado)
+                    .hasSize(10);
+        }
+        @Test
+        void devePermitirConsultarRestaurante() {
+            var restauranteGerado = RestauranteHelper.gerarRestaurante(null);
+            var restaurante = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado);
 
-    @Test
-    void devePermitirConsultarRestauranteQueNomeContenha(){
-        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
-        restauranteGerado1.setNome("Avenida Grill");
-        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+            var id = restaurante.getId();
 
-        var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
-        restauranteGerado2.setNome("Prime grill");
-        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
+            var restauranteOptional = restauranteRepository.findById(id);
 
-        var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
-        restauranteGerado3.setNome("Sushi House");
-        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
+            assertThat(restauranteOptional)
+                    .isPresent()
+                    .containsSame(restaurante);
 
-        var parteDoNome = "grill";
+            restauranteOptional.ifPresent(restauranteArmazenado -> {
+                assertThat(restauranteArmazenado)
+                        .usingRecursiveComparison()
+                        .isEqualTo(restaurante);
+            });
 
-        var resultado = restauranteRepository.findByNomeContainingIgnoreCase(parteDoNome);
+        }
+        @Test
+        void devePermitirConsultarRestauranteQueNomeContenha() {
+            var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+            restauranteGerado1.setNome("Avenida Grill");
+            var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
 
-        assertThat(resultado).hasSize(2);
-    }
+            var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
+            restauranteGerado2.setNome("Prime grill");
+            var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
 
-    @Test
-    void devePermitirConsultarRestaurantePorTipoCulinaria(){
-        var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
-        restauranteGerado1.setTipoCulinaria("BBQ");
-        var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+            var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
+            restauranteGerado3.setNome("Sushi House");
+            var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
 
-        var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
-        restauranteGerado2.setTipoCulinaria("BBQ");
-        var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
+            var parteDoNome = "grill";
 
-        var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
-        restauranteGerado2.setTipoCulinaria("Oriental");
-        var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
+            var resultado = restauranteRepository.findByNomeContainingIgnoreCase(parteDoNome);
 
-        var tipoCulinariaEsperado = "Oriental";
+            assertThat(resultado).hasSize(2);
+        }
 
-        var resultado = restauranteRepository.findByTipoCulinariaContainingIgnoreCase("oriental");
+        @Test
+        void devePermitirConsultarRestaurantePorTipoCulinaria() {
+            var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+            restauranteGerado1.setTipoCulinaria("BBQ");
+            var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
 
-        assertThat(resultado).hasSize(1);
+            var restauranteGerado2 = RestauranteHelper.gerarRestaurante(null);
+            restauranteGerado2.setTipoCulinaria("BBQ");
+            var restaurante2 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado2);
 
+            var restauranteGerado3 = RestauranteHelper.gerarRestaurante(null);
+            restauranteGerado2.setTipoCulinaria("Oriental");
+            var restaurante3 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado3);
+
+            var tipoCulinariaEsperado = "Oriental";
+
+            var resultado = restauranteRepository.findByTipoCulinariaContainingIgnoreCase("oriental");
+
+            assertThat(resultado).hasSize(1);
+
+        }
+
+        @Test
+        void devePermitirConsultarRestaurantePorEndereco() {
+            var restauranteGerado1 = RestauranteHelper.gerarRestaurante(null);
+            var restaurante1 = RestauranteHelper.registrarRestaurante(restauranteRepository, restauranteGerado1);
+
+            var resultado = restauranteRepository.findByEndereco("Av. Silva Jardim", "Umuarama", 82887417L, "780A");
+
+            assertThat(resultado).hasSize(1);
+        }
     }
 
 

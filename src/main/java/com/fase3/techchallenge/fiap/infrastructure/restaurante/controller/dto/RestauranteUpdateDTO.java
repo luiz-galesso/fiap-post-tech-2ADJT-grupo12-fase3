@@ -8,18 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RestauranteInsertDTO {
-
+public class RestauranteUpdateDTO {
     private String nome;
-
     private Long cnpj;
-
     private Endereco endereco;
-
     private String tipoCulinaria;
-
     private Integer capacidade;
-
     private String situacao;
     private String horarioFuncionamento;
 }

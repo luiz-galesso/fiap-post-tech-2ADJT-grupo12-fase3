@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -39,6 +40,7 @@ public class Restaurante {
     /*TODO necessario melhorar talvez colocar em uma tabela somente disso*/
     private String horarioFuncionamento;
 
+    @CreationTimestamp
     private LocalDateTime dataRegistro;
 
     public Restaurante(String nome, Long cnpj, Endereco endereco, String tipoCulinaria, Integer capacidade, String situacao, String horarioFuncionamento, LocalDateTime dataRegistro) {
@@ -50,6 +52,12 @@ public class Restaurante {
         this.situacao = situacao;
         this.horarioFuncionamento = horarioFuncionamento;
         this.dataRegistro = dataRegistro;
+    }
+
+    @PrePersist
+    public void prePersist(){
+        var timestamp = LocalDateTime.now();
+        dataRegistro = timestamp;
     }
 
     public Restaurante(Endereco endereco) {
