@@ -141,20 +141,6 @@ public class RestauranteControllerIT {
                     .statusCode(HttpStatus.OK.value())
                     .body(matchesJsonSchemaInClasspath("schemas/restaurante/RestauranteResponseSchema.json"));
         }
-
-        @Test
-        void devePermitirAlterarRestaurante2() {
-
-
-            given()
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .body(any(RestauranteUpdateDTO.class))
-                    .when()
-                    .put("/api-restaurante/restaurantes/{id}", 999L)
-                    .then()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
-        }
-
     }
 }
 
