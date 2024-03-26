@@ -49,7 +49,7 @@ public class EditarComentarioIT {
         Comentario comentario = comentar.execute(new ComentarioInsertDTO(reserva.getId(), "Comida joia"));
 
         //Act
-        var comentarioAlterado = editarComentario.execute(comentario.getId(), "COMIDA JÓIA!");
+        var comentarioAlterado = editarComentario.execute(comentario.getId(), "COMIDA EXCELENTE!");
 
         //Assert
         assertThat(comentarioAlterado).isNotNull();
