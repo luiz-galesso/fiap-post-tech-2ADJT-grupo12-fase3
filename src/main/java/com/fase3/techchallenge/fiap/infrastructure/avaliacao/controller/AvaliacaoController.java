@@ -29,7 +29,7 @@ public class AvaliacaoController {
         this.apagarAvaliacao = apagarAvaliacao;
     }
 
-    @Operation( summary= "Realiza uma nova avaliação de uma reserva", description= "Serviço utilizado para realizar uma nova avaliação de uma reversa.")
+    @Operation( summary= "Realiza uma nova avaliação de uma reserva", description= "Serviço utilizado para realizar uma nova avaliação de uma reserva.")
     @PostMapping(produces = "application/json")
     @Transactional
     public ResponseEntity<?> create(@RequestBody AvaliacaoInsertDTO avaliacaoInsertDTO) {
