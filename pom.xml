@@ -8,13 +8,14 @@
         <version>3.2.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.fase2.techchallenge.fiap</groupId>
+    <groupId>com.fase3.techchallenge.fiap</groupId>
     <artifactId>api-restaurante</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api-restaurante</name>
     <description>Tech Challenge - Fase 3 - api-restaurante</description>
     <properties>
         <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>
@@ -47,7 +48,7 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.4.0.Final</version>
         </dependency>
@@ -131,6 +132,11 @@
             <groupId>io.gatling.highcharts</groupId>
             <artifactId>gatling-charts-highcharts</artifactId>
             <version>3.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.gatling</groupId>
+            <artifactId>gatling-maven-plugin</artifactId>
+            <version>4.3.7</version>
         </dependency>
     </dependencies>
     <build>
@@ -228,15 +234,13 @@
                         <artifactId>gatling-maven-plugin</artifactId>
                         <version>4.3.7</version>
                         <configuration>
-                            <simulationClass>com.fase2.techchallenge.fiap.performance.ReservaPerformanceTest</simulationClass>
-                            <simulationClass>com.fase2.techchallenge.fiap.performance.ComentarioPerformanceTest</simulationClass>
-                            <simulationClass>com.fase2.techchallenge.fiap.performance.ClientePerformanceTest</simulationClass>
+                            <simulationClass>performance.com.fase3.techchallenge.fiap.ClientePerformanceTest</simulationClass>
+                            <simulationClass>performance.com.fase3.techchallenge.fiap.ReservaPerformanceTest</simulationClass>
+                            <simulationClass>performance.com.fase3.techchallenge.fiap.ComentarioPerformanceTest</simulationClass>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-
     </profiles>
-
 </project>
