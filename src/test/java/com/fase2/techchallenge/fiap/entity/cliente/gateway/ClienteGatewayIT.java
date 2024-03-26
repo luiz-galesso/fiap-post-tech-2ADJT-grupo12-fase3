@@ -1,6 +1,5 @@
-package com.fase2.techchallenge.fiap.entity.gateway.cliente;
+package com.fase2.techchallenge.fiap.entity.cliente.gateway;
 
-import com.fase2.techchallenge.fiap.entity.cliente.gateway.ClienteGateway;
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.utils.ClienteHelper;
 import jakarta.transaction.Transactional;
