@@ -2,7 +2,6 @@ package com.fase3.techchallenge.fiap.entity.avaliacao.gateway;
 
 import com.fase3.techchallenge.fiap.entity.avaliacao.model.Avaliacao;
 import com.fase3.techchallenge.fiap.infrastructure.avaliacao.repository.AvaliacaoRepository;
-import com.fase3.techchallenge.fiap.infrastructure.restaurante.repository.RestauranteRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -12,7 +11,7 @@ public class AvaliacaoGateway {
 
     private AvaliacaoRepository avaliacaoRepository;
 
-    public AvaliacaoGateway(RestauranteRepository restauranteRepository) {
+    public AvaliacaoGateway(AvaliacaoRepository avaliacaoRepository) {
         this.avaliacaoRepository = avaliacaoRepository;
     }
     public Avaliacao create(Avaliacao avaliacao){
