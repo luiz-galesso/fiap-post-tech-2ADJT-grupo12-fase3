@@ -82,7 +82,12 @@
             <artifactId>json-schema-validator</artifactId>
             <version>5.3.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version> <!-- Versão mais recente disponível -->
+            <scope>test</scope>
+        </dependency>
         <!-- cucumber -->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -225,6 +230,7 @@
                         <configuration>
                             <simulationClass>com.fase2.techchallenge.fiap.performance.ReservaPerformanceTest</simulationClass>
                             <simulationClass>com.fase2.techchallenge.fiap.performance.ComentarioPerformanceTest</simulationClass>
+                            <simulationClass>com.fase2.techchallenge.fiap.performance.ClientePerformanceTest</simulationClass>
                         </configuration>
                     </plugin>
                 </plugins>

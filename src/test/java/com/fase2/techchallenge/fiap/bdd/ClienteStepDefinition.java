@@ -1,7 +1,9 @@
 package com.fase2.techchallenge.fiap.bdd;
+
 import com.fase2.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase2.techchallenge.fiap.infrastructure.cliente.controller.dto.ClienteInsertDTO;
 import com.fase2.techchallenge.fiap.utils.ClienteHelper;
+import com.github.javafaker.Faker;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -20,10 +22,18 @@ public class ClienteStepDefinition {
     private Response response;
     private Cliente clienteRetorno;
     private static final String ENDPOINT_API_CLIENTE = "http://localhost:8080/api-restaurante/clientes";
+    private final Faker faker = new Faker();
+
+    private String gerarNomeRandon() {
+        String nome = faker.name().firstName() + " " + faker.name().lastName();
+        return nome;
+    }
 
     @Quando("registrar um cliente")
     public Cliente registrarUmCliente() {
-        var cliente = ClienteHelper.gerarCliente("joao-wick@email.com", "Joao Wick", "ATIVO", LocalDate.of(1983, 12, 27));
+        String nome = gerarNomeRandon();
+        String email = nome + "@email.com";
+        var cliente = ClienteHelper.gerarCliente(email, nome, "ATIVO", LocalDate.of(1983, 12, 27));
         ClienteInsertDTO clienteInsertDTO = new ClienteInsertDTO(cliente.getEmail()
                 , cliente.getNome()
                 , cliente.getSituacao()
@@ -68,7 +78,7 @@ public class ClienteStepDefinition {
 
     @Quando("efetuar a requisicao para alterar o cliente")
     public void efetuarRequisicaoParaAlterarCliente() {
-        clienteRetorno.setNome("Joao Wick II");
+        clienteRetorno.setSituacao("INATIVO");
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRetorno)
@@ -87,7 +97,7 @@ public class ClienteStepDefinition {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .delete(ENDPOINT_API_CLIENTE + "{id}", clienteRetorno.getEmail());
+                .delete(ENDPOINT_API_CLIENTE + "/{id}", clienteRetorno.getEmail());
     }
 
     @Então("o cliente é removida com sucesso")
