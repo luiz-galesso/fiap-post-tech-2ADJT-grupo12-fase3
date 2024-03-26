@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "nome": {
+      "type": "string"
+    },
+    "cnpj": {
+      "type": "integer"
+    },
+    "endereco": {
+      "type": "object",
+      "properties": {
+        "logradouro": {
+          "type": "string"
+        },
+        "numero": {
+          "type": "string"
+        },
+        "bairro": {
+          "type": "string"
+        },
+        "complemento": {
+          "type": "string"
+        },
+        "cep": {
+          "type": "integer"
+        },
+        "cidade": {
+          "type": "string"
+        },
+        "estado": {
+          "type": "string"
+        },
+        "referencia": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "logradouro",
+        "numero",
+        "bairro",
+        "complemento",
+        "cep",
+        "cidade",
+        "estado",
+        "referencia"
+      ]
+    },
+    "tipoCulinaria": {
+      "type": "string"
+    },
+    "capacidade": {
+      "type": "integer"
+    },
+    "situacao": {
+      "type": "string"
+    },
+    "horarioFuncionamento": {
+      "type": "string"
+    },
+    "dataRegistro": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "nome",
+    "cnpj",
+    "endereco",
+    "tipoCulinaria",
+    "capacidade",
+    "situacao",
+    "horarioFuncionamento",
+    "dataRegistro"
+  ]
+}
