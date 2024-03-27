@@ -32,6 +32,25 @@ public class ReservaHelper {
                .build();
     }
 
+    public static Reserva gerarReserva(Long id, LocalDateTime dataInicio, LocalDateTime dataFim, String situacao, Long idRestaurante) {
+
+        Mesa mesa = new Mesa();
+        Restaurante restaurante = RestauranteHelper.gerarRestaurante(idRestaurante);
+        mesa.setId(new MesaId(restaurante, 10L));
+
+        Cliente cliente = new Cliente();
+        cliente.setEmail("maria.santos@example.com");
+
+        return Reserva.builder()
+                .id(id)
+                .dataHoraInicio(dataInicio)
+                .dataHoraFinal(dataFim)
+                .situacao(situacao)
+                .mesa(mesa)
+                .cliente(cliente)
+                .build();
+    }
+
     public static List<Reserva> gerarLista()
     {
         List<Reserva> reservas = new ArrayList<>();

@@ -28,7 +28,11 @@ public class ReservarIT
     @Test
     void deveExecutarReserva() {
         //Arrange
-        LocalDateTime dataInicio = LocalDateTime.of(2024, 3, 20, 11, 30);
+        LocalDateTime dataInicio = LocalDateTime.of(LocalDateTime.now().getYear(),
+                LocalDateTime.now().getMonth().getValue(),
+                LocalDateTime.now().getDayOfMonth(),
+                LocalDateTime.now().getHour(),
+                LocalDateTime.now().getMinute());
         ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(
                 1L,
                 1L,
@@ -83,7 +87,11 @@ public class ReservarIT
     @Test
     void deveGerarExcecao_QuandoExisteReserva() {
         //Arrange
-        LocalDateTime dataInicio = LocalDateTime.of(2024, 3, 20, 11, 30);
+        LocalDateTime dataInicio = LocalDateTime.of(LocalDateTime.now().getYear(),
+                LocalDateTime.now().getMonth().getValue(),
+                LocalDateTime.now().getDayOfMonth(),
+                LocalDateTime.now().getHour(),
+                LocalDateTime.now().getMinute());
         ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(
                 1L,
                 1L,

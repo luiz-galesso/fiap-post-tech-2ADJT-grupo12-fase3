@@ -1,7 +1,6 @@
 package com.fase3.techchallenge.fiap.infrastructure.restaurante.controller;
 
 import com.fase3.techchallenge.fiap.entity.endereco.model.Endereco;
-import com.fase3.techchallenge.fiap.handler.GlobalExceptionHandler;
 import com.fase3.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteInsertDTO;
 import com.fase3.techchallenge.fiap.infrastructure.restaurante.controller.dto.RestauranteUpdateDTO;
 import com.fase3.techchallenge.fiap.infrastructure.restaurante.utils.RestauranteHelper;
@@ -56,7 +55,6 @@ public class RestauranteControllerTest {
                 buscarRestaurantePelaLocalizacao,
                 atualizarRestaurante);
         mockMvc = MockMvcBuilders.standaloneSetup(restauranteController)
-                .setControllerAdvice(new GlobalExceptionHandler())
                 .addFilter((request, response, chain) -> {
                     response.setCharacterEncoding("UTF-8");
                     chain.doFilter(request, response);

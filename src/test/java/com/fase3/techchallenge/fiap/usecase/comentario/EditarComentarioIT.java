@@ -16,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SpringBootTest
 @AutoConfigureTestDatabase
 @Transactional
@@ -50,7 +48,7 @@ public class EditarComentarioIT {
         Comentario comentario = comentar.execute(new ComentarioInsertDTO(reserva.getId(), "Comida joia"));
 
         //Act
-        var comentarioAlterado = editarComentario.execute(comentario.getId(), "COMIDA JÓIA!");
+        var comentarioAlterado = editarComentario.execute(comentario.getId(), "COMIDA EXCELENTE!");
 
         //Assert
         Assertions.assertThat(comentarioAlterado).isNotNull();

@@ -305,7 +305,7 @@ VALUES
     (9, NEXT VALUE FOR MESA_SEQUENCE, 8, 'ATIVO', 'EXTERNO'),
     (9, NEXT VALUE FOR MESA_SEQUENCE, 4, 'ATIVO', 'INTERNO'),
     (9, NEXT VALUE FOR MESA_SEQUENCE, 6, 'ATIVO', 'EXTERNO'),
-    (10, NEXT VALUE FOR MESA_SEQUENCE, 4, 'ATIVO', 'INTERNO'),
+    (10, 1, 4, 'ATIVO', 'INTERNO'),
     (10, NEXT VALUE FOR MESA_SEQUENCE, 6, 'INATIVO', 'EXTERNO'),
     (10, NEXT VALUE FOR MESA_SEQUENCE, 2, 'INATIVO', 'INTERNO'),
     (10, NEXT VALUE FOR MESA_SEQUENCE, 8, 'ATIVO', 'EXTERNO'),
@@ -322,6 +322,12 @@ VALUES
     (10, NEXT VALUE FOR MESA_SEQUENCE, 2, 'INATIVO', 'INTERNO');
 
 -- INSERÇÃO DE RESERVAS --
+INSERT INTO tb_reserva (id, mesa_id_mesa,mesa_restaurante_id, cliente_email, situacao, data_hora_inicio, data_hora_final)
+VALUES
+    (50,1 ,1, 'joao.silva@example.com', 'ATIVO', '2024-03-20 11:30:00','2024-03-20 14:15:00');
+INSERT INTO tb_reserva (id, mesa_id_mesa,mesa_restaurante_id, cliente_email, situacao, data_hora_inicio, data_hora_final)
+VALUES
+    (51,10 ,1, 'joao.silva@example.com', 'CHECKOUT', '2024-03-20 11:30:00','2024-03-20 14:15:00');
 
 -- INSERÇÃO DE AVALIAÇÕES --
 
