@@ -31,6 +31,9 @@ public class ClientePerformanceTest extends Simulation {
 
     ActionBuilder buscarClienteRequest = http("buscar cliente")
             .get("/clientes/#{id}")
+            .checkIf((response, session) -> {
+                return session.getString("id") != null;
+            }).then()
             .check(status().is(HttpStatus.OK.value()));
 
     ActionBuilder removerClienteRequest = http("remover cliente")
