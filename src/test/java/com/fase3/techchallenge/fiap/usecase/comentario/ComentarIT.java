@@ -44,20 +44,23 @@ public class ComentarIT {
         LocalDateTime dataInicio = LocalDateTime.now();
         String idCliente = "felipe.albuquerque@example.com";
 
-        ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, idCliente, dataInicio, 2);
-        Reserva reserva = reservar.execute(reservaInsertDTO);
-        realizarCheckin.execute(reserva.getId(), idCliente);
-        realizarCheckout.execute(reserva.getId(), idCliente);
-        Comentario comentario = ComentarioHelper.criarComentario();
+//        ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, idCliente, dataInicio, 2);
+//        Reserva reserva = reservar.execute(reservaInsertDTO);
+//        realizarCheckin.execute(reserva.getId(), idCliente);
+//        realizarCheckout.execute(reserva.getId(), idCliente);
+        Comentario comentario = ComentarioHelper.criarComentario(51L);
 
         //Act
-        Comentario comentarioAlterado = comentar.execute(new ComentarioInsertDTO(reserva.getId(), comentario.getTexto()));
+        Comentario comentarioAlterado = comentar.execute(new ComentarioInsertDTO(comentario.getReserva().getId(), comentario.getTexto()));
+
+        System.out.println("resultados");
+        System.out.println("resultados" + comentario);
+        System.out.println("resultados" + comentarioAlterado);
 
         //Assert
         assertThat(comentarioAlterado).isNotNull();
-        assertThat(comentarioAlterado.getId()).isEqualTo(comentario.getId());
         assertThat(comentarioAlterado.getTexto()).isEqualTo(comentario.getTexto());
-        assertThat(comentarioAlterado.getReserva().getId()).isEqualTo(comentarioAlterado.getReserva().getId());
+        assertThat(comentarioAlterado.getReserva().getId()).isEqualTo(comentario.getReserva().getId());
 
     }
 

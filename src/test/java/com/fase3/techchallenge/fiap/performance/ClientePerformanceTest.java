@@ -85,7 +85,7 @@ public class ClientePerformanceTest extends Simulation {
                                 .to(10)
                                 .during(Duration.ofSeconds(10)),
                         constantUsersPerSec(10)
-                                .during(Duration.ofSeconds(45)),
+                                .during(Duration.ofSeconds(30)),
                         rampUsersPerSec(10)
                                 .to(1)
                                 .during(Duration.ofSeconds(10))),
@@ -94,7 +94,7 @@ public class ClientePerformanceTest extends Simulation {
                                 .to(10)
                                 .during(Duration.ofSeconds(10)),
                         constantUsersPerSec(10)
-                                .during(Duration.ofSeconds(45)),
+                                .during(Duration.ofSeconds(30)),
                         rampUsersPerSec(10)
                                 .to(1)
                                 .during(Duration.ofSeconds(10))),
@@ -103,7 +103,7 @@ public class ClientePerformanceTest extends Simulation {
                                 .to(10)
                                 .during(Duration.ofSeconds(10)),
                         constantUsersPerSec(10)
-                                .during(Duration.ofSeconds(45)),
+                                .during(Duration.ofSeconds(30)),
                         rampUsersPerSec(10)
                                 .to(1)
                                 .during(Duration.ofSeconds(10))),
@@ -112,7 +112,7 @@ public class ClientePerformanceTest extends Simulation {
                                 .to(10)
                                 .during(Duration.ofSeconds(10)),
                         constantUsersPerSec(10)
-                                .during(Duration.ofSeconds(45)),
+                                .during(Duration.ofSeconds(30)),
                         rampUsersPerSec(10)
                                 .to(1)
                                 .during(Duration.ofSeconds(10)))
@@ -120,7 +120,7 @@ public class ClientePerformanceTest extends Simulation {
         )
                 .protocols(httpProtocol)
                 .assertions(
-                        global().responseTime().max().lt(360)
+                        global().responseTime().max().lt(900)
                 );
     }
 

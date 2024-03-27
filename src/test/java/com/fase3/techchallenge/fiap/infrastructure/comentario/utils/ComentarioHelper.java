@@ -21,4 +21,20 @@ public class ComentarioHelper {
                     .dataRegistro(dataInicio).build();
         }
     }
+
+    public static Comentario criarComentario(Long id){
+        {
+            LocalDateTime dataInicio = LocalDateTime.of(LocalDateTime.now().getYear(),
+                    LocalDateTime.now().getMonth().getValue(),
+                    LocalDateTime.now().getDayOfMonth(),
+                    LocalDateTime.now().getHour(),
+                    LocalDateTime.now().getMinute());
+
+            return Comentario.builder()
+                    .id(1L)
+                    .reserva(ReservaHelper.gerarReserva(id, dataInicio, dataInicio.plusHours(2), "CHECKOUT", 10L))
+                    .texto("Comida boa")
+                    .dataRegistro(dataInicio).build();
+        }
+    }
 }

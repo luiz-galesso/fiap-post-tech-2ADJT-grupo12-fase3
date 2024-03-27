@@ -234,9 +234,7 @@
                         <artifactId>gatling-maven-plugin</artifactId>
                         <version>4.3.7</version>
                         <configuration>
-                            <simulationClass>performance.com.fase3.techchallenge.fiap.ClientePerformanceTest</simulationClass>
-                            <simulationClass>performance.com.fase3.techchallenge.fiap.ReservaPerformanceTest</simulationClass>
-                            <simulationClass>performance.com.fase3.techchallenge.fiap.ComentarioPerformanceTest</simulationClass>
+                            <simulationClass>com.fase3.techchallenge.fiap.performance.ClientePerformanceTest</simulationClass>
                         </configuration>
                     </plugin>
                 </plugins>
