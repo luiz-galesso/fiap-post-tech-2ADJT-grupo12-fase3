@@ -52,7 +52,7 @@ public class ReservaControllerIT {
         void devePermitirRegistrarReserva() throws Exception {
 
             LocalDateTime dataInicio = LocalDateTime.now();
-            ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, "maria.santos@example.com", dataInicio, 2);
+            ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 7L, "maria.santos@example.com", dataInicio, 2);
 
             given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +71,11 @@ public class ReservaControllerIT {
         void devePermitirBuscarReservaPeloId() throws Exception {
 
             //Arrange
-            LocalDateTime dataInicio = LocalDateTime.of(2024, 3, 20, 11, 30);
+            LocalDateTime dataInicio = LocalDateTime.of(LocalDateTime.now().getYear(),
+                    LocalDateTime.now().getMonth().getValue(),
+                    LocalDateTime.now().getDayOfMonth(),
+                    LocalDateTime.now().getHour(),
+                    LocalDateTime.now().getMinute());
             ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, "maria.santos@example.com", dataInicio, 2);
             Reserva reserva = reservar.execute(reservaInsertDTO);
 
