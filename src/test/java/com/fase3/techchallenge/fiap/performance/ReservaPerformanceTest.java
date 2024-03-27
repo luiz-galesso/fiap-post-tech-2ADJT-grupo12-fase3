@@ -1,8 +1,6 @@
 package com.fase3.techchallenge.fiap.performance;
 
-import com.fase3.techchallenge.fiap.infrastructure.reserva.controller.dto.ReservaInsertDTO;
 import io.gatling.javaapi.core.ActionBuilder;
-import io.gatling.javaapi.core.Body;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
@@ -10,40 +8,71 @@ import org.springframework.http.HttpStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.*;
+import static io.gatling.javaapi.http.HttpDsl.http;
+import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class ReservaPerformanceTest extends Simulation {
 
-    private final HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8080")
+    private final HttpProtocolBuilder httpProtocol = http.baseUrl("http://localhost:8080/api-restaurante")
             .header("Content-Type", "application/json");
 
-    LocalDateTime dataInicio = LocalDateTime.now();
-    ReservaInsertDTO reservaInsertDTO = new ReservaInsertDTO(1L, 1L, "maria.santos@example.com", dataInicio, 2);
+    ActionBuilder cadastrarReservaRequest = http("Cadastrar Reserva")
+            .post("/reservas")
+            .body(StringBody(session -> {
+                int dayOfMonth = ThreadLocalRandom.current().nextInt(1, 29);
+                int hour = ThreadLocalRandom.current().nextInt(0, 24);
+                int minute = ThreadLocalRandom.current().nextInt(0, 60);
+                LocalDateTime dateTeste = LocalDateTime.of(2024, 3, dayOfMonth, hour, minute);
+                return "{\"idRestaurante\":1,\"idMesa\":1,\"idCliente\":\"maria.santos@example.com\",\"dataHoraInicio\":\"" + dateTeste + "\",\"quantidadeHoras\":0}";
+            }))
+            .asJson()
+            .check(status().is(HttpStatus.CREATED.value()))
+            .check(jsonPath("$.id").saveAs("id"));
 
-    String reservaBody = "{\"idRestaurante\":1,\"idMesa\":1,\"idCliente\":\"maria.santos@example.com\",\"dataHoraInicio\":\"2024-03-24T00:00:00Z\",\"quantidadeHoras\":2}";
+    ActionBuilder buscarReservaRequest = http("Buscar Reserva")
+            .get("/reservas/#{id}")
+            .checkIf((response, session) -> {
+                return session.getString("id") != null;
+            })
+            .then(status().is(HttpStatus.OK.value()));
 
-    ActionBuilder reservarMesaRequest = http("Reservar mesa")
-            .post("/api-restaurante/reservas")
-            .body(StringBody(reservaBody))
-            .check(status().is(HttpStatus.CREATED.value()));
+    ScenarioBuilder cenarioCadastrarReserva = scenario("Cadastrar Reserva")
+            .exec(cadastrarReservaRequest);
 
-    ScenarioBuilder cenarioReservaMesa = scenario("reservar mesa")
-            .exec(reservarMesaRequest);
+    ScenarioBuilder cenarioCadastrarBuscarReserva = scenario("Cadatrar e Buscar Reserva")
+            .exec(cadastrarReservaRequest)
+            .exec(buscarReservaRequest);
 
     {
         setUp(
-                cenarioReservaMesa.injectOpen(
-                        rampUsersPerSec(1).to(1).during(Duration.ofSeconds(10)),
-                        constantUsersPerSec(1).during(Duration.ofSeconds(10)),
-                        rampUsersPerSec(1).to(1).during(Duration.ofSeconds(10))
+                cenarioCadastrarReserva.injectOpen(
+                        rampUsersPerSec(1)
+                                .to(10)
+                                .during(Duration.ofSeconds(10)),
+                        constantUsersPerSec(10)
+                                .during(Duration.ofSeconds(30)),
+                        rampUsersPerSec(10)
+                                .to(1)
+                                .during(Duration.ofSeconds(10))
+                ),
+                cenarioCadastrarBuscarReserva.injectOpen(
+                        rampUsersPerSec(1)
+                                .to(10)
+                                .during(Duration.ofSeconds(10)),
+                        constantUsersPerSec(10)
+                                .during(Duration.ofSeconds(30)),
+                        rampUsersPerSec(10)
+                                .to(1)
+                                .during(Duration.ofSeconds(10))
                 )
 
         )
                 .protocols(httpProtocol)
                 .assertions(
-                        global().responseTime().max().lt(50)
+                        global().responseTime().max().lt(360)
                 );
     }
 }

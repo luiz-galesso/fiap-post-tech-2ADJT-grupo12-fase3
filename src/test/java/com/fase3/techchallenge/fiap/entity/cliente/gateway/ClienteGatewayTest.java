@@ -1,6 +1,5 @@
-package com.fase3.techchallenge.fiap.entity.gateway.cliente;
+package com.fase3.techchallenge.fiap.entity.cliente.gateway;
 
-import com.fase3.techchallenge.fiap.entity.cliente.gateway.ClienteGateway;
 import com.fase3.techchallenge.fiap.entity.cliente.model.Cliente;
 import com.fase3.techchallenge.fiap.infrastructure.cliente.repository.ClienteRepository;
 import com.fase3.techchallenge.fiap.utils.ClienteHelper;
@@ -15,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 public class ClienteGatewayTest {
 
